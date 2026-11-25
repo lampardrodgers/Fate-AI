@@ -35,6 +35,19 @@
 
 每位角色都有完整的「从者资料卡」：型月模板、召唤圣遗物、六维面板（雷达图 + 条形图）、御主档案、保有技能、宝具与阵营剧本。
 
+## 宣传视频
+
+🎬 [观看宣传视频（73 秒 · 1080p）](https://fate.emmm.si/promo/fate-ai-promo.mp4) — 文件位于 `promo/fate-ai-promo.mp4`
+
+重新生成（改了设定后视频会跟着更新）：
+
+```bash
+python3 -m http.server 8765 &          # 卡面需要通过本地服务器渲染
+node promo/extract-data.js             # 从 index.html 抽取角色数据 → promo/data.js
+./promo/render-cards.sh                # 无头 Chrome 渲染每一幕的背景层 / 文字层
+node promo/make-video.js               # ffmpeg 合成：推镜、文字入场、转场、配乐剪辑
+```
+
 ## 截图
 
 <table>
@@ -75,6 +88,7 @@
 │   ├── logo.svg          # FATE/AI Logo（矢量源文件）
 │   ├── audio/bgm.m4a     # 背景音乐（Fate/Zero OST I - Track 01 "Point Zero"）
 │   └── thumbs/           # 立绘缩略图（首页、目录、表格使用）
+├── promo/                # 宣传视频及其生成脚本（card.html 卡面 / render-cards.sh / make-video.js）
 ├── docs/                 # README 用的截图
 ├── 纯立绘/               # 原始立绘（详情页与大图使用）
 └── 角色设定图/           # 角色设定图原图

@@ -1267,13 +1267,15 @@ if(bgmWanted){
   // browsers block autoplay until the visitor interacts; resume on first interaction
   bgmPlay().catch(()=>{
     bgmBtn.classList.add('hint');
+    // keep listening until a gesture actually unlocks audio (not every event counts as one)
+    const EV = ['pointerdown','pointerup','touchend','click','keydown'];
+    const done = ()=>{ bgmBtn.classList.remove('hint'); EV.forEach(t=>removeEventListener(t, resume, true)); };
     const resume = e=>{
-      bgmBtn.classList.remove('hint');
+      if(!bgmWanted || !bgm.paused) return done();
       if(e.target.closest && e.target.closest('#bgmBtn')) return;
-      if(bgmWanted && bgm.paused) bgmPlay().catch(()=>{});
-      ['pointerdown','keydown','touchstart'].forEach(t=>removeEventListener(t, resume, true));
+      bgmPlay().then(done).catch(()=>{});
     };
-    ['pointerdown','keydown','touchstart'].forEach(t=>addEventListener(t, resume, true));
+    EV.forEach(t=>addEventListener(t, resume, true));
   });
 }
 

@@ -451,6 +451,20 @@ html[lang="en"] .skill .sub-en{display:block}
 /* stack radar + bars when the panel is narrow */
 .params-wrap{container-type:inline-size}
 @container (max-width:540px){.params{grid-template-columns:1fr}.radar{max-width:250px;margin:0 auto;width:100%}}
+
+/* ---------- BGM button ---------- */
+#bgmBtn .eq{display:flex;align-items:flex-end;gap:2px;height:14px}
+#bgmBtn .eq i{display:block;width:2.5px;height:4px;background:currentColor;transition:height .3s}
+#bgmBtn.playing .eq i{animation:eq 1s ease-in-out infinite}
+#bgmBtn.playing .eq i:nth-child(2){animation-delay:-.4s}
+#bgmBtn.playing .eq i:nth-child(3){animation-delay:-.7s}
+#bgmBtn.playing .eq i:nth-child(4){animation-delay:-.2s}
+@keyframes eq{0%,100%{height:3px}50%{height:14px}}
+#bgmBtn:not(.playing) .eq{position:relative}
+#bgmBtn:not(.playing) .eq::after{content:"";position:absolute;left:-3px;right:-3px;top:50%;height:1.5px;background:currentColor;transform:rotate(-35deg);opacity:.85}
+#bgmBtn.hint{animation:hint 2.2s ease-in-out infinite}
+@keyframes hint{0%,100%{box-shadow:0 0 0 0 rgba(201,169,97,0)}50%{box-shadow:0 0 0 4px rgba(201,169,97,.35)}}
+#bgmBtn.playing{color:var(--red2);border-color:color-mix(in srgb,var(--red2) 60%,transparent)}
 </style>
 </head>
 <body>
@@ -461,6 +475,7 @@ html[lang="en"] .skill .sub-en{display:block}
 </nav>
 
 <div class="tools">
+  <button id="bgmBtn" type="button" aria-label="BGM" aria-pressed="false"><span class="eq"><i></i><i></i><i></i><i></i></span></button>
   <button id="themeBtn" type="button" aria-label="theme"></button>
   <div class="langs" id="langs">
     <button type="button" data-lang="zh">中</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="ja">日</button>
@@ -878,7 +893,7 @@ const UI = {
     navRoster:'名录', navOverview:'总览', railRoster:'参战者名录', railOverview:'全员座次总览', railAppendix:'附录',
     footLine:'FATE/AI COMPLETE MATERIAL · 同人二创设定 · 仅供娱乐',
     colon:'：', subL:'（', subR:'）', wizard:'魔法使',
-    toLight:'切换到亮色模式', toDark:'切换到暗色模式', showSmall:true,
+    toLight:'切换到亮色模式', toDark:'切换到暗色模式', bgmPlay:'播放背景音乐', bgmStop:'关闭背景音乐', showSmall:true,
   },
   en:{
     htmlLang:'en', title:'FATE/AI · The TYPE-MOON AI Holy Grail War — Complete Material',
@@ -893,7 +908,7 @@ const UI = {
     navRoster:'Roster', navOverview:'Overview', railRoster:'Roll of Combatants', railOverview:'The Throne Table', railAppendix:'Appendix',
     footLine:'FATE/AI COMPLETE MATERIAL · Fan-made parody · For entertainment only',
     colon:': ', subL:' (', subR:')', wizard:'WIZARD',
-    toLight:'Switch to light mode', toDark:'Switch to dark mode', showSmall:false,
+    toLight:'Switch to light mode', toDark:'Switch to dark mode', bgmPlay:'Play background music', bgmStop:'Mute background music', showSmall:false,
   },
   ja:{
     htmlLang:'ja', title:'FATE/AI · 型月AI聖杯戦争 完全版設定資料集',
@@ -908,7 +923,7 @@ const UI = {
     navRoster:'名簿', navOverview:'総覧', railRoster:'参戦者名簿', railOverview:'全員席次総覧', railAppendix:'付録',
     footLine:'FATE/AI COMPLETE MATERIAL · 二次創作パロディ · エンタメ目的',
     colon:'：', subL:'（', subR:'）', wizard:'魔法使',
-    toLight:'ライトモードに切替', toDark:'ダークモードに切替', showSmall:true,
+    toLight:'ライトモードに切替', toDark:'ダークモードに切替', bgmPlay:'BGMを再生', bgmStop:'BGMを停止', showSmall:true,
   },
 };
 const LIGHT = {saber:'#5d47d6',archer:'#a87410',lancer:'#c4283f',rider:'#8f6b32',caster:'#cf5f12',assassin:'#1f7f93',berserker:'#ad1b36',ruler:'#2a63d4',unbeast:'#cf1428',zelretch:'#3f8a14'};
@@ -1049,6 +1064,7 @@ function renderAll(){
   $('mxHead').innerHTML = '<tr><th>' + U.mxFirst + '</th>' + U.stats.map(t=>`<th>${t}</th>`).join('') + '</tr>';
   document.querySelectorAll('#langs button').forEach(b=>b.classList.toggle('on', b.dataset.lang===LANG));
   updateThemeBtn();
+  updateBgmBtn();
 
   // hero mosaic (once)
   if(firstRender) $('mosaic').innerHTML = DATA.map(d=>`<div style="background-image:url('${imgThumb(d)}')"></div>`).join('');
@@ -1200,6 +1216,61 @@ $('themeBtn').addEventListener('click',()=>{
   localStorage.setItem('fateai-theme', next);
   updateThemeBtn();
 });
+
+
+// background music
+const bgm = new Audio('assets/audio/bgm.m4a');
+bgm.loop = true; bgm.preload = 'none'; bgm.volume = 0;
+const BGM_VOL = 0.45;
+const bgmBtn = $('bgmBtn');
+let bgmWanted = localStorage.getItem('fateai-bgm') === 'on';
+let fadeTimer = null;
+function fadeTo(target, ms, done){
+  clearInterval(fadeTimer);
+  const start = bgm.volume, t0 = performance.now();
+  fadeTimer = setInterval(()=>{
+    const k = Math.min(1, (performance.now()-t0)/ms);
+    bgm.volume = Math.max(0, Math.min(1, start + (target-start)*k));
+    if(k>=1){ clearInterval(fadeTimer); done && done(); }
+  }, 30);
+}
+function updateBgmBtn(){
+  const playing = !bgm.paused;
+  bgmBtn.classList.toggle('playing', playing);
+  bgmBtn.setAttribute('aria-pressed', playing);
+  bgmBtn.title = bgmBtn.ariaLabel = playing ? U.bgmStop : U.bgmPlay;
+}
+function bgmPlay(){
+  return bgm.play().then(()=>{ fadeTo(BGM_VOL, 1800); updateBgmBtn(); });
+}
+function bgmStop(){
+  fadeTo(0, 600, ()=>{ bgm.pause(); updateBgmBtn(); });
+  bgmBtn.classList.remove('playing');
+}
+bgmBtn.addEventListener('click', ()=>{
+  bgmBtn.classList.remove('hint');
+  if(bgm.paused || !bgmWanted){
+    bgmWanted = true; localStorage.setItem('fateai-bgm','on');
+    bgmPlay().catch(()=>{});
+  } else {
+    bgmWanted = false; localStorage.setItem('fateai-bgm','off');
+    bgmStop();
+  }
+});
+bgm.addEventListener('play', updateBgmBtn);
+bgm.addEventListener('pause', updateBgmBtn);
+if(localStorage.getItem('fateai-bgm') === null) bgmBtn.classList.add('hint');
+if(bgmWanted){
+  // browsers block autoplay until the visitor interacts; resume on first interaction
+  bgmPlay().catch(()=>{
+    const resume = e=>{
+      if(e.target.closest && e.target.closest('#bgmBtn')) return;
+      if(bgmWanted && bgm.paused) bgmPlay().catch(()=>{});
+      ['pointerdown','keydown','touchstart'].forEach(t=>removeEventListener(t, resume, true));
+    };
+    ['pointerdown','keydown','touchstart'].forEach(t=>addEventListener(t, resume, true));
+  });
+}
 
 // lightbox
 const lb = $('lb'), lbImg = $('lbImg'), lbCap = $('lbCap');

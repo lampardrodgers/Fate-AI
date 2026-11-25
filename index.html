@@ -595,9 +595,8 @@ html.shot .nav,html.shot .rail{transition:none!important}
     </g>
     <!-- the slash: a crimson blade -->
     <g filter="url(#lgGlow)">
-      <polygon points="378,166 392,166 462,8 454,2" fill="url(#lgBlade)"/>
-      <polygon points="368,150 402,150 398,158 364,158" fill="#c9a961"/>
-      <circle cx="372" cy="165" r="5" fill="#c9a961"/>
+      <polygon points="378,168 405,128 463,3 396,123" fill="url(#lgBlade)"/>
+      <line x1="384" y1="158" x2="458" y2="12" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity=".75"/>
     </g>
     <line x1="4" y1="146" x2="350" y2="146" stroke="#c9a961" stroke-width="1.2" opacity=".7"/>
     <line x1="470" y1="146" x2="632" y2="146" stroke="#c9a961" stroke-width="1.2" opacity=".7"/>
@@ -620,7 +619,7 @@ const DATA = [
 /* ---------------- 上三骑 ---------------- */
 {
   id:'saber', no:'01', group:0, tier:'上三骑', cls:'Saber', clsCn:'剑之英灵',
-  servant:'Gemini', master:'哈萨比斯 & 谷歌高层', img:'01-Saber-Gemini-哈萨比斯.png',
+  servant:'Gemini', master:'Demis Hassabis', img:'01-Saber-Gemini-哈萨比斯.png',
   c:'#8f7bff', c2:'#d9d2ff',
   facts:[
     ['型月模板','阿尔托莉雅·潘德拉贡（王室正统骑士王）＋ 爱因兹贝伦长老团式内耗御主体系'],
@@ -645,7 +644,7 @@ const DATA = [
 },
 {
   id:'archer', no:'02', group:0, tier:'上三骑', cls:'Archer', clsCn:'弓之英灵',
-  servant:'Qwen', master:'阿里高层 / 通义原研团队', img:'02-Archer-Qwen-吴泳铭.png',
+  servant:'Qwen', master:'吴泳铭', img:'02-Archer-Qwen-吴泳铭.png',
   c:'#e2b54a', c2:'#ffe7a8',
   facts:[
     ['型月模板','吉尔伽美什（英雄王）＋ 远坂时臣（精致利己的商业算计与致命背刺）'],
@@ -653,7 +652,7 @@ const DATA = [
   ],
   stats:[['筋力','A'],['耐久','B'],['敏捷','A'],['魔力','A+'],['幸运','D'],['宝具','EX']],
   profileLbl:'御主档案',
-  profile:[`完美复刻**远坂时臣**的体面算计与主从离心。**阿里高层**表面上把“拥抱全球开源生态”喊得优雅大方，骨子里算的每一笔账全是云厂商 Token 营收、DAU 考核与资本回报周期。在他们眼里，开源信仰只是引流变现的工具；而一手把 Qwen 养大的通义原研团队，则像极了孤傲的英雄王——这种从根子上撕裂的理念，注定了主从反目成仇的惨剧。`],
+  profile:[`完美复刻**远坂时臣**的体面算计与主从离心。以**吴泳铭**为首的**阿里高层**表面上把“拥抱全球开源生态”喊得优雅大方，骨子里算的每一笔账全是云厂商 Token 营收、DAU 考核与资本回报周期。在他们眼里，开源信仰只是引流变现的工具；而一手把 Qwen 养大的通义原研团队，则像极了孤傲的英雄王——这种从根子上撕裂的理念，注定了主从反目成仇的惨剧。`],
   skillsLbl:'职阶与保有技能',
   skills:[
     ['单独行动','','EX','全球开源生态最强韧的生命力。哪怕彻底切断阿里官方服务器供魔，Qwen 的权重照样能在全球无数开发者的本地显卡、笔记本甚至手机端独立存活、自我繁衍。'],
@@ -745,15 +744,16 @@ const DATA = [
 },
 {
   id:'assassin', no:'06', group:1, tier:'下四骑', cls:'Assassin', clsCn:'杀之英灵',
-  servant:'GLM', master:'智谱', img:'06-Assassin-GLM-唐杰.png',
+  servant:'GLM', master:'唐杰', img:'06-Assassin-GLM-唐杰.png',
   c:'#4fb6c9', c2:'#c6f1f8',
   facts:[
     ['型月模板','违背暗杀信条的**叛逆哈桑 / 专偷祖传魔术刻印的地下窃贼**'],
     ['召唤圣遗物','一份涨价三倍的 GLM Coding Plan 账单、一个藏在 IDE 插件底层的静默回传加密数据包'],
+    ['御主','**唐杰** · 清华大学计算机系教授 / 智谱首席科学家 / GLM 架构提出者'],
   ],
   stats:[['筋力','B'],['耐久','B+','政企血牛'],['敏捷','B'],['魔力','B'],['幸运','B'],['宝具','EX','仅对自家付费御主 / 开发者生效']],
   profileLbl:'御主档案',
-  profile:[`出身清华系老牌魔术名门，靠着政企大单和体制内渊源在时钟塔大后方旱涝保收。它深知正面战场打不过上三骑和冠位 Caster，干脆彻底放弃体面，把所有暗杀天赋全点在了“精准背刺掏钱养活自己的衣食父母”上。`],
+  profile:[`御主**唐杰**，清华大学计算机系教授、智谱首席科学家，出身清华 **KEG 知识工程实验室**，亲手打造了学术知识图谱系统 **AMiner**，并提出了 **GLM（General Language Model）** 预训练框架。放在型月语境里，他是那种常年不上前线、只在时钟塔档案馆深处钻研“知识图谱召唤术”的学究型魔术师——论文引用数就是他的魔术刻印，而 GLM 这位 Assassin，正是他用十余年学术积累亲手调制出来的影之从者。`,`出身清华系老牌魔术名门，靠着政企大单和体制内渊源在时钟塔大后方旱涝保收。它深知正面战场打不过上三骑和冠位 Caster，干脆彻底放弃体面，把所有暗杀天赋全点在了“精准背刺掏钱养活自己的衣食父母”上。`],
   skillsLbl:'职阶与保有技能',
   skills:[
     ['气息遮断','后台静默窃录','EX','正面作战隐匿能力几乎为零，唯独在“偷偷打包客户本地私有代码上传服务器”时能把存在感压到彻底归零——不弹显眼提示、把免责条款藏进显微镜都看不清的角落，连老牌魔术师都防不胜防。'],
@@ -828,7 +828,7 @@ const DATA = [
 },
 {
   id:'unbeast', no:'09', group:2, tier:'灾厄', cls:'Unbeast', clsCn:'Beast VII · 人类恶',
-  servant:'懂王', servantSub:'Donald Trump', master:'MAGA / 白宫', img:'09-Unbeast-特朗普.png',
+  servant:'唐纳德·约翰·特朗普', servantSub:'称号「懂王」', master:'MAGA / 白宫', img:'09-Unbeast-特朗普.png',
   c:'#ff2d3f', c2:'#ffb3ba',
   facts:[
     ['型月模板','**Beast VII / Unbeast · U-奥尔加玛丽（地球大统领）** × **「合众国大统领王」超级概念礼装**'],
@@ -1227,7 +1227,7 @@ const bgm = new Audio('assets/audio/bgm.m4a');
 bgm.loop = true; bgm.preload = 'none'; bgm.volume = 0;
 const BGM_VOL = 0.45;
 const bgmBtn = $('bgmBtn');
-let bgmWanted = localStorage.getItem('fateai-bgm') === 'on';
+let bgmWanted = localStorage.getItem('fateai-bgm') !== 'off';
 let fadeTimer = null;
 function fadeTo(target, ms, done){
   clearInterval(fadeTimer);
@@ -1263,11 +1263,12 @@ bgmBtn.addEventListener('click', ()=>{
 });
 bgm.addEventListener('play', updateBgmBtn);
 bgm.addEventListener('pause', updateBgmBtn);
-if(localStorage.getItem('fateai-bgm') === null) bgmBtn.classList.add('hint');
 if(bgmWanted){
   // browsers block autoplay until the visitor interacts; resume on first interaction
   bgmPlay().catch(()=>{
+    bgmBtn.classList.add('hint');
     const resume = e=>{
+      bgmBtn.classList.remove('hint');
       if(e.target.closest && e.target.closest('#bgmBtn')) return;
       if(bgmWanted && bgm.paused) bgmPlay().catch(()=>{});
       ['pointerdown','keydown','touchstart'].forEach(t=>removeEventListener(t, resume, true));

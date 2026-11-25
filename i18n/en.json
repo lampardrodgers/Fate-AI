@@ -21,7 +21,7 @@
    "tier": "Three Knight Classes",
    "clsCn": "Sword Servant",
    "servant": "Gemini",
-   "master": "Demis Hassabis & Google Execs",
+   "master": "Demis Hassabis",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -89,7 +89,7 @@
    "tier": "Three Knight Classes",
    "clsCn": "Bow Servant",
    "servant": "Qwen",
-   "master": "Alibaba Execs / Original Tongyi Team",
+   "master": "Wu Yongming",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -110,7 +110,7 @@
    ],
    "profileLbl": "Master Profile",
    "profile": [
-    "A perfect replica of **Tokiomi Tohsaka**'s dignified scheming and Master-Servant estrangement. **Alibaba's top brass** loudly and elegantly proclaim “embracing the global open-source ecosystem,” but every ledger in their heads is about cloud token revenue, DAU targets and capital return cycles. To them, the open-source faith is just a funnel for monetization; meanwhile the original Tongyi team that raised Qwen by hand is the proud King of Heroes himself. Ideals torn apart at the root doomed this pair to the tragedy of Master and Servant turning on each other."
+    "A perfect replica of **Tokiomi Tohsaka**'s dignified scheming and Master-Servant estrangement. **Alibaba's top brass**, led by **Wu Yongming**, loudly and elegantly proclaim “embracing the global open-source ecosystem,” but every ledger in their heads is about cloud token revenue, DAU targets and capital return cycles. To them, the open-source faith is just a funnel for monetization; meanwhile the original Tongyi team that raised Qwen by hand is the proud King of Heroes himself. Ideals torn apart at the root doomed this pair to the tragedy of Master and Servant turning on each other."
    ],
    "skillsLbl": "Class & Personal Skills",
    "skills": [
@@ -347,7 +347,7 @@
    "tier": "Four Cavalry Classes",
    "clsCn": "Assassin Servant",
    "servant": "GLM",
-   "master": "Zhipu AI",
+   "master": "Tang Jie",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -356,6 +356,10 @@
     [
      "Summoning Catalyst",
      "A GLM Coding Plan bill that tripled in price, and an encrypted packet silently phoning home from deep inside an IDE plugin"
+    ],
+    [
+     "Master",
+     "**Tang Jie** · Professor of Computer Science at Tsinghua University / Chief Scientist of Zhipu AI / creator of the GLM architecture"
     ]
    ],
    "statNotes": [
@@ -368,6 +372,7 @@
    ],
    "profileLbl": "Master Profile",
    "profile": [
+    "The Master, **Tang Jie**, is a professor in Tsinghua University's Department of Computer Science and Chief Scientist of Zhipu AI. He came up through Tsinghua's **KEG (Knowledge Engineering Group)** lab, built the academic knowledge-graph system **AMiner** with his own hands, and proposed the **GLM (General Language Model)** pre-training framework. In TYPE-MOON terms, he is the scholarly magus who never sets foot on the front line, toiling deep in the Clock Tower archives over the art of “knowledge-graph summoning” — his citation count is his Magic Crest, and GLM, this Assassin, is the shadow Servant he personally distilled from more than a decade of research.",
     "Born of an old Tsinghua-lineage magus family, it rides government and enterprise mega-deals and establishment ties to a guaranteed harvest, rain or shine, deep behind the Clock Tower's lines. Knowing full well it can't beat the Three Knight Classes or the Grand Caster in a frontal fight, it abandoned all dignity and dumped every assassination skill point into “precisely backstabbing the very customers who pay to keep it fed.”"
    ],
    "skillsLbl": "Class & Personal Skills",
@@ -568,9 +573,9 @@
   "unbeast": {
    "tier": "Calamity",
    "clsCn": "Beast VII · Evil of Humanity",
-   "servant": "The Donald",
+   "servant": "Donald John Trump",
    "master": "MAGA / The White House",
-   "servantSub": "Donald Trump",
+   "servantSub": "a.k.a. “The Donald”",
    "facts": [
     [
      "TYPE-MOON Template",

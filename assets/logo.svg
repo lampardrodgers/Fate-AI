@@ -22,9 +22,8 @@
     </g>
     <!-- the slash: a crimson blade -->
     <g filter="url(#lgGlow)">
-      <polygon points="378,166 392,166 462,8 454,2" fill="url(#lgBlade)"/>
-      <polygon points="368,150 402,150 398,158 364,158" fill="#c9a961"/>
-      <circle cx="372" cy="165" r="5" fill="#c9a961"/>
+      <polygon points="378,168 405,128 463,3 396,123" fill="url(#lgBlade)"/>
+      <line x1="384" y1="158" x2="458" y2="12" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity=".75"/>
     </g>
     <line x1="4" y1="146" x2="350" y2="146" stroke="#c9a961" stroke-width="1.2" opacity=".7"/>
     <line x1="470" y1="146" x2="632" y2="146" stroke="#c9a961" stroke-width="1.2" opacity=".7"/>

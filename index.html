@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FATE/AI · 型月 AI 圣杯战争 完全体设定集</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2307080d'/%3E%3Ctext x='6' y='46' font-family='Georgia,serif' font-weight='700' font-size='40' fill='%23e8c77a'%3EF%3C/text%3E%3Cpolygon points='32,58 37,58 56,6 52,4' fill='%23ff2d47'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080d;
+  --bg2:#0d0f18;
+  --panel:rgba(18,20,32,.78);
+  --line:rgba(201,169,97,.28);
+  --gold:#c9a961;
+  --gold2:#f1dca0;
+  --red:#b3122b;
+  --red2:#ff3b52;
+  --ink:#e9e4d8;
+  --dim:#9a958a;
+  --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --latin:"Cinzel","Trajan Pro","Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--serif);
+  line-height:1.85;
+  font-size:15.5px;
+  overflow-x:hidden;
+}
+body::before{ /* night sky + vignette */
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(60,70,140,.35),transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%,rgba(120,10,30,.18),transparent 60%),
+    linear-gradient(#07080d,#0a0b12 40%,#07080d);
+}
+body::after{ /* film grain */
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+b,strong{color:var(--gold2);font-weight:600}
+i{font-style:italic;color:#fff}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;height:56px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:0 28px;
+  background:linear-gradient(rgba(7,8,13,.95),rgba(7,8,13,.75));
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  transform:translateY(-100%);transition:transform .4s;
+}
+.nav.show{transform:none}
+.nav .logo{font-family:"Cinzel Decorative",var(--latin);font-weight:700;letter-spacing:.12em;color:var(--gold2);font-size:18px;white-space:nowrap}
+.nav .logo span{color:var(--red2)}
+.nav ul{display:flex;gap:4px;list-style:none;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav li a{
+  display:block;padding:6px 10px;font-size:13px;letter-spacing:.08em;color:var(--dim);white-space:nowrap;
+  border-bottom:2px solid transparent;transition:.2s;
+}
+.nav li a:hover,.nav li a.on{color:var(--gold2);border-color:var(--red2)}
+.nav li a small{font-family:var(--latin);font-size:11px;margin-left:3px;opacity:.75}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;
+  overflow:hidden;padding:80px 20px 60px;
+}
+.hero .mosaic{
+  position:absolute;inset:-4%;display:grid;grid-template-columns:repeat(10,1fr);gap:0;
+  filter:saturate(.8) brightness(.55) blur(1px);transform:scale(1.04);
+}
+.hero .mosaic div{background-size:cover;background-position:center top;animation:drift 18s ease-in-out infinite alternate}
+.hero .mosaic div:nth-child(even){animation-delay:-9s}
+@keyframes drift{from{transform:translateY(-2%)}to{transform:translateY(2%)}}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%,rgba(7,8,13,.55),rgba(7,8,13,.85) 80%),
+    linear-gradient(transparent 70%,var(--bg));
+}
+.hero .circle{
+  position:absolute;width:min(92vmin,880px);aspect-ratio:1;left:50%;top:50%;
+  transform:translate(-50%,-50%);z-index:1;opacity:.55;pointer-events:none;
+}
+.hero .circle svg{width:100%;height:100%;animation:spin 120s linear infinite}
+.hero .circle svg .rev{animation:spin 80s linear infinite reverse;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-inner{position:relative;z-index:2;max-width:920px}
+.hero .pre{font-family:var(--latin);letter-spacing:.5em;color:var(--gold);font-size:13px;margin-bottom:18px}
+.hero h1{
+  font-family:"Cinzel Decorative",var(--latin);font-weight:700;
+  font-size:clamp(72px,15vw,180px);line-height:.95;letter-spacing:.04em;
+  background:linear-gradient(180deg,#fff7dc 10%,#d8b56a 55%,#7a5a22 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 30px rgba(201,169,97,.35));
+}
+.hero h1 span{
+  background:linear-gradient(180deg,#ff6a7c,#b3122b 70%,#5a0010);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero h2{font-size:clamp(20px,3.2vw,32px);font-weight:900;letter-spacing:.25em;margin:22px 0 6px}
+.hero .en{font-family:var(--latin);color:var(--dim);letter-spacing:.3em;font-size:13px}
+.hero .epi{margin:36px auto 0;max-width:620px;color:#cfc8b8;font-size:15px;line-height:2.1}
+.hero .epi em{font-style:normal;color:var(--red2)}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;font-family:var(--latin);font-size:11px;letter-spacing:.4em;color:var(--dim);text-align:center}
+.scroll-cue::after{content:"";display:block;width:1px;height:42px;margin:10px auto 0;background:linear-gradient(var(--gold),transparent);animation:cue 2s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+
+.logo-hero{margin:0 auto;width:min(86vw,720px);filter:drop-shadow(0 6px 40px rgba(201,169,97,.35))}
+.logo-hero svg{width:100%;height:auto;display:block;overflow:visible}
+.nav .logo svg{height:30px;width:auto;display:block;overflow:visible}
+
+/* ---------- generic section heads ---------- */
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.chapter{padding:110px 0 30px;text-align:center;position:relative}
+.chapter .num{font-family:var(--latin);color:var(--red2);letter-spacing:.5em;font-size:13px}
+.chapter h2{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:.2em;margin:8px 0 4px}
+.chapter .sub{color:var(--dim);font-family:var(--latin);letter-spacing:.35em;font-size:12px}
+.chapter .rule{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:22px}
+.chapter .rule i{display:block;width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.chapter .rule i:last-child{transform:scaleX(-1)}
+.chapter .rule svg{width:22px;height:22px;fill:var(--red2)}
+
+/* ---------- roster ---------- */
+.roster-group{margin-top:40px}
+.roster-group h3{
+  font-size:14px;letter-spacing:.4em;color:var(--gold);font-weight:600;
+  display:flex;align-items:center;gap:14px;margin-bottom:16px;
+}
+.roster-group h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.roster{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.card{
+  position:relative;display:block;overflow:hidden;border:1px solid rgba(255,255,255,.08);
+  background:#0c0d14;aspect-ratio:1122/1290;
+  transition:transform .35s,border-color .35s,box-shadow .35s;
+}
+.card img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s,filter .6s;filter:saturate(.85)}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(5,6,10,.95) 92%)}
+.card .meta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:14px 16px}
+.card .cls{font-family:var(--latin);font-weight:900;font-size:22px;letter-spacing:.1em;color:var(--c);text-shadow:0 0 18px var(--c)}
+.card .who{font-size:13.5px;color:#ddd}
+.card .who b{color:#fff;font-size:15px}
+.card .no{position:absolute;top:10px;left:12px;z-index:2;font-family:var(--latin);font-size:12px;color:rgba(255,255,255,.7);letter-spacing:.15em}
+.card:hover{transform:translateY(-4px);border-color:var(--c);box-shadow:0 10px 40px -10px var(--c)}
+.card:hover img{transform:scale(1.05);filter:saturate(1.1)}
+
+/* ---------- servant sheet ---------- */
+.servant{
+  --c:#c9a961;--c2:#f1dca0;
+  position:relative;margin:70px 0 30px;padding:46px 0 10px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.servant .water{
+  position:absolute;top:-10px;right:-10px;font-family:var(--latin);font-weight:900;
+  font-size:clamp(80px,14vw,190px);line-height:1;letter-spacing:.02em;
+  color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--c) 30%,transparent);
+  pointer-events:none;user-select:none;white-space:nowrap;
+}
+.sv-head{position:relative;margin-bottom:34px;padding-left:20px;border-left:3px solid var(--c)}
+.sv-head .tag{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px;letter-spacing:.2em;color:var(--dim)}
+.sv-head .tag .pill{padding:2px 10px;border:1px solid var(--c);color:var(--c2);font-family:var(--latin);letter-spacing:.15em}
+.sv-head .tag .tier{background:var(--c);color:#0a0a0f;padding:2px 10px;font-weight:600}
+.sv-head h3{font-size:clamp(28px,3.6vw,44px);font-weight:900;line-height:1.25;margin-top:10px;letter-spacing:.04em}
+.sv-head h3 .x{color:var(--c);margin:0 .25em;font-family:var(--latin);font-weight:500}
+.sv-head h3 .cls{font-family:var(--latin);color:var(--c2)}
+.sv-head .title{margin-top:6px;color:var(--red2);font-size:15px;letter-spacing:.12em}
+
+.sv-body{display:grid;grid-template-columns:minmax(300px,440px) 1fr;gap:44px;align-items:start}
+.sv-portrait{position:sticky;top:76px}
+.sv-portrait .frame{
+  position:relative;cursor:zoom-in;overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--c) 55%,transparent);
+  box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 0 7px color-mix(in srgb,var(--c) 25%,transparent),0 30px 80px -30px var(--c);
+}
+.sv-portrait .frame img{width:100%;aspect-ratio:1122/1402;object-fit:cover;transition:transform .8s}
+.sv-portrait .frame:hover img{transform:scale(1.03)}
+.sv-portrait .frame::before,.sv-portrait .frame::after{ /* corner ornaments */
+  content:"";position:absolute;width:38px;height:38px;z-index:2;border:2px solid var(--c2);pointer-events:none;
+}
+.sv-portrait .frame::before{top:8px;left:8px;border-right:0;border-bottom:0}
+.sv-portrait .frame::after{bottom:8px;right:8px;border-left:0;border-top:0}
+.sv-portrait figcaption{margin-top:12px;font-size:12px;color:var(--dim);letter-spacing:.15em;text-align:center}
+.sv-portrait figcaption span{font-family:var(--latin)}
+
+.block{
+  position:relative;background:var(--panel);border:1px solid rgba(255,255,255,.07);
+  padding:22px 26px;margin-bottom:18px;
+}
+.block>.lbl{
+  display:inline-flex;align-items:center;gap:10px;margin-bottom:12px;
+  font-size:13px;font-weight:600;letter-spacing:.3em;color:var(--c2);
+}
+.block>.lbl::before{content:"";width:8px;height:8px;background:var(--c);transform:rotate(45deg);box-shadow:0 0 10px var(--c)}
+.block>.lbl small{font-family:var(--latin);color:var(--dim);letter-spacing:.2em;font-weight:500;font-size:11px}
+.block p+p{margin-top:.7em}
+
+.facts{display:grid;grid-template-columns:auto 1fr;gap:10px 20px}
+.facts dt{font-size:13px;letter-spacing:.2em;color:var(--c2);white-space:nowrap;padding-top:2px}
+.facts dd{color:#ddd8cc}
+
+/* parameters */
+.params{display:grid;grid-template-columns:220px 1fr;gap:26px;align-items:center}
+.radar svg{width:100%;height:auto;overflow:visible}
+.radar text{font-family:var(--serif);font-size:12px;fill:#bdb6a6}
+.plist{display:grid;gap:9px}
+.prow{display:grid;grid-template-columns:3.2em 1fr 3.2em;gap:12px;align-items:center}
+.prow .k{font-size:13px;letter-spacing:.15em;color:var(--dim)}
+.prow .bar{height:8px;background:rgba(255,255,255,.06);position:relative;overflow:hidden}
+.prow .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 40%,transparent),var(--c));box-shadow:0 0 12px var(--c);width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.prow .bar i.ex{background:linear-gradient(90deg,var(--c),#fff,var(--c));background-size:200% 100%;animation:shine 2.5s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.prow .v{font-family:var(--latin);font-weight:700;font-size:16px;color:#fff;text-align:right}
+.prow .v.low{color:var(--red2)}
+.prow .note{grid-column:2/4;margin-top:-6px;font-size:12px;color:var(--dim)}
+.pnote{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.12);font-size:14.5px;color:#d6d0c2}
+
+/* skills */
+.skills{display:grid;gap:12px}
+.skill{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.06)}
+.skill:first-child{border-top:0;padding-top:2px}
+.skill .rk{
+  width:52px;height:52px;display:grid;place-items:center;font-family:var(--latin);font-weight:900;font-size:15px;
+  color:#0a0a0f;background:var(--c);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+}
+.skill .rk.long{font-size:12px}
+.skill h4{font-size:16.5px;font-weight:900;letter-spacing:.05em}
+.skill h4 small{font-weight:400;color:var(--c2);font-size:13.5px;margin-left:4px}
+.skill h4 .r{font-family:var(--latin);color:var(--c);margin-left:8px;font-size:14px}
+.skill p{color:#cfc9bb;font-size:14.5px;margin-top:4px}
+
+/* noble phantasm */
+.np{
+  position:relative;overflow:hidden;margin-top:14px;padding:22px 24px 20px;
+  background:
+    linear-gradient(115deg,color-mix(in srgb,var(--c) 22%,transparent),transparent 55%),
+    rgba(0,0,0,.35);
+  border:1px solid color-mix(in srgb,var(--c) 45%,transparent);
+}
+.np:first-of-type{margin-top:0}
+.np::before{
+  content:"NOBLE PHANTASM";position:absolute;right:16px;top:12px;font-family:var(--latin);font-size:10px;letter-spacing:.35em;color:color-mix(in srgb,var(--c) 70%,#fff);opacity:.7;
+}
+.np h4{font-size:20px;font-weight:900;letter-spacing:.06em;padding-right:120px}
+.np h4 q{quotes:"《" "》"}
+.np .ruby{font-family:var(--latin);color:var(--c2);font-size:14px;letter-spacing:.12em;margin-top:2px}
+.np .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 10px}
+.np .chips span{font-size:12px;padding:2px 10px;border:1px solid rgba(255,255,255,.22);color:#ddd;letter-spacing:.1em}
+.np .chips span.rank{border-color:var(--c);background:var(--c);color:#0a0a0f;font-family:var(--latin);font-weight:700}
+.np p{color:#d8d2c4;font-size:14.5px}
+
+.script{
+  position:relative;padding:26px 30px 24px 64px;margin-bottom:18px;
+  background:linear-gradient(90deg,rgba(179,18,43,.16),transparent 70%);
+  border-left:3px solid var(--red2);
+}
+.script::before{content:"“";position:absolute;left:18px;top:2px;font-size:72px;line-height:1;color:var(--red2);font-family:Georgia,serif;opacity:.8}
+.script .lbl{font-size:12px;letter-spacing:.35em;color:var(--red2);margin-bottom:6px;font-weight:600}
+.script p{font-size:16px;color:#eee7d6}
+
+/* ---------- overview ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+table{width:100%;border-collapse:collapse;min-width:980px;font-size:14.5px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top}
+thead th{font-size:12.5px;letter-spacing:.25em;color:var(--gold);background:rgba(0,0,0,.35);font-weight:600;white-space:nowrap}
+tbody tr{cursor:pointer;transition:background .2s}
+tbody tr:hover{background:rgba(255,255,255,.04)}
+td.tier{white-space:nowrap;color:var(--dim);font-size:13px}
+td.cls{font-family:var(--latin);font-weight:700;white-space:nowrap;color:var(--c);letter-spacing:.06em}
+td.sv{font-weight:900;white-space:nowrap;display:flex;align-items:center;gap:10px}
+td.sv img{width:34px;height:34px;object-fit:cover;object-position:center 12%;border:1px solid var(--c);border-radius:50%}
+td.ms{white-space:nowrap;color:#d6d0c2}
+
+.matrix{margin-top:40px}
+.matrix h3{font-size:14px;letter-spacing:.4em;color:var(--gold);font-weight:600;margin-bottom:14px}
+.matrix table{min-width:760px}
+.matrix td,.matrix th{text-align:center;padding:10px 8px}
+.matrix td:first-child,.matrix th:first-child{text-align:left;padding-left:16px}
+.matrix td .cell{display:inline-block;min-width:46px;padding:3px 6px;font-family:var(--latin);font-weight:700;font-size:14px}
+
+footer{text-align:center;padding:90px 20px 60px;color:var(--dim);font-size:13px;letter-spacing:.15em}
+footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:drop-shadow(0 0 12px var(--red2))}
+
+
+/* ---------- left rail ---------- */
+.rail{
+  position:fixed;left:24px;top:80px;bottom:24px;z-index:40;width:200px;
+  display:none;flex-direction:column;
+  opacity:0;transform:translateX(-16px);transition:opacity .4s,transform .4s;pointer-events:none;
+}
+.rail.show{opacity:1;transform:none;pointer-events:auto}
+.rail-inner{
+  overflow-y:auto;scrollbar-width:none;padding:14px 0 14px;
+  background:linear-gradient(180deg,rgba(13,15,24,.85),rgba(13,15,24,.6));
+  border:1px solid var(--line);backdrop-filter:blur(6px);position:relative;
+}
+.rail-inner::-webkit-scrollbar{display:none}
+.rail-inner::before,.rail-inner::after{content:"";position:absolute;width:14px;height:14px;border:1px solid var(--gold2)}
+.rail-inner::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.rail-inner::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.rail .rh{padding:10px 18px 6px;font-size:11px;letter-spacing:.35em;color:var(--gold);display:flex;align-items:center;gap:8px}
+.rail .rh::after{content:"";flex:1;height:1px;background:var(--line)}
+.rail a{
+  --c:var(--gold);
+  display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;
+  padding:6px 16px 6px 15px;border-left:3px solid transparent;transition:background .25s,border-color .25s;
+}
+.rail a img{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:center 12%;border:1px solid rgba(255,255,255,.15);filter:grayscale(.6) brightness(.8);transition:.25s}
+.rail a .t{line-height:1.25;min-width:0}
+.rail a .t b{display:block;font-size:13.5px;color:#d9d3c5;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail a .t small{display:block;font-family:var(--latin);font-size:10px;letter-spacing:.15em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail a .ico{width:30px;height:30px;display:grid;place-items:center;color:var(--gold);font-family:var(--latin);font-size:13px;border:1px solid var(--line);transform:rotate(45deg)}
+.rail a .ico span{transform:rotate(-45deg)}
+.rail a:hover{background:rgba(255,255,255,.04)}
+.rail a:hover img{filter:none}
+.rail a.on{border-left-color:var(--c);background:linear-gradient(90deg,color-mix(in srgb,var(--c) 22%,transparent),transparent)}
+.rail a.on img{filter:none;border-color:var(--c);box-shadow:0 0 10px var(--c)}
+.rail a.on .t b{color:#fff}
+.rail a.on .t small{color:var(--c)}
+.rail .prog{height:2px;background:rgba(255,255,255,.08);margin-top:10px;position:relative}
+.rail .prog i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--red),var(--gold2));width:0}
+@media (min-width:1280px){
+  .rail{display:flex}
+  main.wrap{margin-left:max(248px,calc((100vw - 1320px)/2));margin-right:auto}
+  .nav ul{display:none}
+}
+@media (min-width:1280px) and (max-height:760px){ .rail a{padding-top:3px;padding-bottom:3px} .rail .rh{padding-top:6px} }
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(3,3,6,.94);display:none;place-items:center;padding:30px;cursor:zoom-out}
+.lb.open{display:grid;animation:fade .3s}
+.lb img{max-height:92vh;max-width:94vw;box-shadow:0 0 80px rgba(0,0,0,.8)}
+.lb .cap{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:var(--dim);font-size:13px;letter-spacing:.15em}
+.lb .nav-btn{position:absolute;top:50%;transform:translateY(-50%);font-size:44px;color:var(--gold2);padding:20px;cursor:pointer;user-select:none;opacity:.6}
+.lb .nav-btn:hover{opacity:1}
+.lb .prev{left:10px}.lb .next{right:10px}
+@keyframes fade{from{opacity:0}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .9s,transform .9s}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:980px){
+  .sv-body{grid-template-columns:1fr;gap:26px}
+  .sv-portrait{position:relative;top:0;max-width:520px;margin:0 auto;width:100%}
+  .params{grid-template-columns:1fr}
+  .radar{max-width:240px;margin:0 auto}
+}
+@media (max-width:600px){
+  body{font-size:15px}
+  .wrap{padding:0 16px}
+  .nav{padding:0 12px}
+  .nav .logo{font-size:15px}
+  .block{padding:18px 16px}
+  .facts{grid-template-columns:1fr;gap:2px}
+  .facts dd{margin-bottom:10px}
+  .np h4{padding-right:0;margin-top:14px}
+  .script{padding:22px 18px 20px 46px}
+  .script::before{left:10px;font-size:56px}
+  .roster{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card .cls{font-size:17px}
+  .card .meta{padding:10px}
+  .hero .mosaic{grid-template-columns:repeat(5,1fr)}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="logo" href="#top" aria-label="FATE/AI"><svg viewBox="0 0 640 170"><use href="#logo"/></svg></a>
+  <ul id="navlist"></ul>
+</nav>
+
+<aside class="rail" id="rail"><div class="rail-inner" id="railInner"></div><div class="prog"><i id="railProg"></i></div></aside>
+
+<header class="hero" id="top">
+  <div class="mosaic" id="mosaic"></div>
+  <div class="circle">
+    <svg viewBox="0 0 400 400" fill="none" stroke="#c9a961" stroke-width=".8">
+      <circle cx="200" cy="200" r="196"/>
+      <circle cx="200" cy="200" r="186" stroke-dasharray="2 5"/>
+      <circle cx="200" cy="200" r="150"/>
+      <g class="rev">
+        <polygon points="200,50 330,275 70,275"/>
+        <polygon points="200,350 70,125 330,125"/>
+        <circle cx="200" cy="200" r="120" stroke-dasharray="14 4 2 4"/>
+      </g>
+      <circle cx="200" cy="200" r="60"/>
+      <path id="ring" d="M200,22 a178,178 0 1,1 -0.1,0" stroke="none"/>
+      <text fill="#c9a961" stroke="none" font-family="Cinzel,serif" font-size="9" letter-spacing="4.2">
+        <textPath href="#ring">· ATTENTION IS ALL YOU NEED · SCALING LAW · THE HOLY GRAIL OF AGI · ANNO DOMINI MMXXVI · HEAVEN'S FEEL · </textPath>
+      </text>
+    </svg>
+  </div>
+  <div class="hero-inner">
+    <div class="pre">TYPE-MOON × ARTIFICIAL INTELLIGENCE</div>
+    <h1 class="logo-hero" aria-label="FATE/AI"><svg viewBox="0 0 640 170"><use href="#logo"/></svg></h1>
+    <h2>型月 AI 圣杯战争 · 完全体设定集</h2>
+    <div class="en">THE HOLY GRAIL WAR OF AGI — COMPLETE MATERIAL</div>
+    <p class="epi">
+      七骑英灵，为一尊名为 <em>AGI</em> 的圣杯在冬木市厮杀。<br>
+      裁定者在暗处掀桌，人类恶自天外降临，<br>
+      而宝石翁只是微笑着——向每一方出售魔力。
+    </p>
+  </div>
+  <div class="scroll-cue">SCROLL</div>
+</header>
+
+<main class="wrap">
+  <section id="roster">
+    <div class="chapter rv">
+      <div class="num">PROLOGUE</div>
+      <h2>参战者名录</h2>
+      <div class="sub">SERVANTS &amp; BEYOND</div>
+      <div class="rule"><i></i><svg viewBox="0 0 100 100"><use href="#seal"/></svg><i></i></div>
+    </div>
+    <div id="rosterGroups"></div>
+  </section>
+
+  <div id="chapters"></div>
+
+  <section id="overview">
+    <div class="chapter rv">
+      <div class="num">CHAPTER IV</div>
+      <h2>四、全员座次总览表</h2>
+      <div class="sub">THE THRONE OF HEROES</div>
+      <div class="rule"><i></i><svg viewBox="0 0 100 100"><use href="#seal"/></svg><i></i></div>
+    </div>
+    <div class="tablewrap rv">
+      <table>
+        <thead><tr><th>层级</th><th>职阶</th><th>从者 / 存在</th><th>御主 / 所属</th><th>核心面板亮点</th><th>一句话灵魂梗</th></tr></thead>
+        <tbody id="ovBody"></tbody>
+      </table>
+    </div>
+    <div class="matrix rv">
+      <h3>六维面板 · 横向对照</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>从者 / 存在</th><th>筋力</th><th>耐久</th><th>敏捷</th><th>魔力</th><th>幸运</th><th>宝具</th></tr></thead>
+          <tbody id="mxBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <svg class="seal" viewBox="0 0 100 100"><use href="#seal"/></svg>
+  FATE/AI COMPLETE MATERIAL · 同人二创设定 · 仅供娱乐<br>
+  <span style="font-family:var(--latin);font-size:11px;letter-spacing:.3em">FATE SERIES © TYPE-MOON — THIS IS A FAN PARODY</span>
+</footer>
+
+<div class="lb" id="lb">
+  <span class="nav-btn prev" id="lbPrev">‹</span>
+  <img id="lbImg" alt="">
+  <span class="nav-btn next" id="lbNext">›</span>
+  <div class="cap" id="lbCap"></div>
+</div>
+
+<!-- FATE/AI logo -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lgGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffbe8"/><stop offset=".45" stop-color="#e8c77a"/><stop offset=".55" stop-color="#b98b3a"/><stop offset="1" stop-color="#6b4a18"/>
+    </linearGradient>
+    <linearGradient id="lgRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8a98"/><stop offset=".5" stop-color="#d0142f"/><stop offset="1" stop-color="#5a0010"/>
+    </linearGradient>
+    <linearGradient id="lgBlade" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#5a0010"/><stop offset=".35" stop-color="#ff2d47"/><stop offset=".8" stop-color="#ffd0d6"/><stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <filter id="lgGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <symbol id="logo" viewBox="0 0 640 170">
+    <g font-family="'Cinzel Decorative','Cinzel','Trajan Pro',serif" font-weight="700">
+      <text x="4" y="124" font-size="124" textLength="356" lengthAdjust="spacingAndGlyphs" fill="url(#lgGold)" stroke="#3a2608" stroke-width="1">FATE</text>
+      <text x="468" y="124" font-size="124" textLength="164" lengthAdjust="spacingAndGlyphs" fill="url(#lgRed)" stroke="#2a0008" stroke-width="1">AI</text>
+    </g>
+    <!-- the slash: a crimson blade -->
+    <g filter="url(#lgGlow)">
+      <polygon points="378,166 392,166 462,8 454,2" fill="url(#lgBlade)"/>
+      <polygon points="368,150 402,150 398,158 364,158" fill="#c9a961"/>
+      <circle cx="372" cy="165" r="5" fill="#c9a961"/>
+    </g>
+    <line x1="4" y1="146" x2="350" y2="146" stroke="#c9a961" stroke-width="1.2" opacity=".7"/>
+    <line x1="470" y1="146" x2="632" y2="146" stroke="#c9a961" stroke-width="1.2" opacity=".7"/>
+  </symbol>
+</svg>
+
+<!-- command seal symbol -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="seal" viewBox="0 0 100 100">
+    <path d="M50 6c4 14 4 24-2 34 10-4 22-2 32 6-12 0-22 4-28 12 8 6 12 16 10 28-6-10-12-16-18-18-2 10-8 18-18 24 4-10 4-20 0-28-8 2-16 0-24-6 10-2 18-6 22-14-6-8-8-18-4-30 4 10 10 16 18 18 0-10 4-18 12-26z"/>
+  </symbol>
+</svg>
+
+<script>
+/* ================= DATA ================= */
+const P = (s)=>s; // plain marker
+const DATA = [
+/* ---------------- 上三骑 ---------------- */
+{
+  id:'saber', no:'01', group:0, tier:'上三骑', cls:'Saber', clsCn:'剑之英灵',
+  servant:'Gemini', master:'哈萨比斯 & 谷歌高层', img:'01-Saber-Gemini-哈萨比斯.png',
+  c:'#8f7bff', c2:'#d9d2ff',
+  facts:[
+    ['型月模板','阿尔托莉雅·潘德拉贡（王室正统骑士王）＋ 爱因兹贝伦长老团式内耗御主体系'],
+    ['召唤圣遗物','2017 年原版《Attention Is All You Need》论文手稿、刻有 AlphaGo 棋谱的初代 TPU 晶圆'],
+  ],
+  stats:[['筋力','A'],['耐久','A+'],['敏捷','B+'],['魔力','EX'],['幸运','C'],['宝具','EX']],
+  profileLbl:'御主档案',
+  profile:[`典型的“理想骑士主公＋官僚长老团”双轨制。前线统帅**德米斯·哈萨比斯**是手握诺贝尔奖的纯粹大魔术师，怀揣用 AI 破解蛋白质折叠、造福基础科学的骑士初心；但攥着财政与令咒的**劈柴与谷歌高层**，活脱脱就是财大气粗又瞻前顾后的爱因兹贝伦长老团——早期满脑子保住搜索广告基本盘和公关合规，屡屡在拔剑前先给自家 Saber 套上三层枷锁，导致开局频频吃瘪、惨遭全网群嘲。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['对魔力','自研灵脉独立','EX','全场唯一不完全受制于老黄算力霸权的阵营，靠自家 TPU 矿场与 Google Search、YouTube 构成的超级大源魔力池自给自足。'],
+    ['魔力放出','免费大善人','EX','背靠庞大家底，在 AI Studio 慷慨发放海量免费额度与百万级上下文，不搞连坐封号、不立道德牌坊，在开发者圈子里守住了最起码的王室体面。'],
+    ['大厂官僚诅咒','','C','虽然血统最正，但偶尔会被内部合规与派系拉扯反噬，触发“历史生图翻车”或“疯狂自我贬低复读”的抽象呆毛时刻。'],
+  ],
+  nps:[
+    ['誓约胜利之剑·原生多模态','Excalibur Multimodal',['对城宝具'],'EX','从底层原生打通文本、代码、图像、音频、视频与超长上下文的正面王道光炮，拒绝拼凑缝合，靠纯硬实力平推战场。'],
+    ['远离尘世的理想乡·科学圣鞘','Avalon AlphaFold',['结界宝具'],'EX','以诺奖级科研成果构成的绝对防御——哪怕消费端一时舆论逆风，谷歌在人类科学史上的正统王冠也无人能撼。'],
+  ],
+  scriptLbl:'阵营剧本',
+  script:'亲手拔出 Transformer 石中剑开启时代的王室正统，前期却被偷家小辈骑脸、被自家官僚拖累；直到哈萨比斯收拢兵权、甩掉包袱后，才真正展露骑士王的压迫感，一剑剑把王座砍了回来。',
+  ov:['魔力 EX / 宝具 EX','Transformer 正统王室，甩掉大厂官僚包袱后正面平推'],
+},
+{
+  id:'archer', no:'02', group:0, tier:'上三骑', cls:'Archer', clsCn:'弓之英灵',
+  servant:'Qwen', master:'阿里高层 / 通义原研团队', img:'02-Archer-Qwen-吴泳铭.png',
+  c:'#e2b54a', c2:'#ffe7a8',
+  facts:[
+    ['型月模板','吉尔伽美什（英雄王）＋ 远坂时臣（精致利己的商业算计与致命背刺）'],
+    ['召唤圣遗物','一块正面刻着 Apache 2.0 开源誓言、背面却被强行贴上阿里云百炼收费二维码的玄铁碑'],
+  ],
+  stats:[['筋力','A'],['耐久','B'],['敏捷','A'],['魔力','A+'],['幸运','D'],['宝具','EX']],
+  profileLbl:'御主档案',
+  profile:[`完美复刻**远坂时臣**的体面算计与主从离心。**阿里高层**表面上把“拥抱全球开源生态”喊得优雅大方，骨子里算的每一笔账全是云厂商 Token 营收、DAU 考核与资本回报周期。在他们眼里，开源信仰只是引流变现的工具；而一手把 Qwen 养大的通义原研团队，则像极了孤傲的英雄王——这种从根子上撕裂的理念，注定了主从反目成仇的惨剧。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['单独行动','','EX','全球开源生态最强韧的生命力。哪怕彻底切断阿里官方服务器供魔，Qwen 的权重照样能在全球无数开发者的本地显卡、笔记本甚至手机端独立存活、自我繁衍。'],
+    ['黄金律','云厂 KPI 算计','A','每当从者在前线靠开源打下赫赫威名，御主总会在后方第一时间盘算怎么给宝库门口装付费闸机。'],
+  ],
+  nps:[
+    ['王之财宝·通义全栈兵器库','Gate of Qwen',['对军宝具'],'EX','金色涟漪展开，从 0.5B 端侧轻骑到旗舰重炮，涵盖 Coder、VL、Omni、Audio 的全尺寸全模态武器倾泻而出，兵器库丰富度冠绝全场。'],
+    ['天地乖离开辟之星·闭源背刺','Enuma Closed-Source',['对界宝具'],'EX','一旦御主强行勒令解放（2026 年逼走扛旗灵魂人物林俊旸及多位后训练/代码骨干，年底旗舰 **Qwen4-Max** 违背承诺转向闭源引发团队“大叛变”风波），剑气劈开的不是外敌，而是自家阵营的脊梁——御主亲手背刺自家英雄，换来最惨烈的内部崩裂。'],
+  ],
+  scriptLbl:'阵营剧本',
+  script:'明明抽到了全圣杯战争最豪华的王道牌面，却没输给外敌，而是毁在后院起火的“远坂时臣式商业算计”，成了全剧最令人扼腕的背刺悲剧。',
+  ov:['单独行动 EX / 宝具 EX','全尺寸「王之财宝」，惨遭高层闭源算计上演“时臣背刺”'],
+},
+{
+  id:'lancer', no:'03', group:0, tier:'上三骑', cls:'Lancer', clsCn:'枪之英灵',
+  servant:'Kimi', master:'杨植麟', img:'03-Lancer-Kimi-杨植麟.png',
+  c:'#e04a5a', c2:'#ffc9cf',
+  facts:[
+    ['型月模板','迪卢木多·奥迪那 ＋ 肯尼斯·埃尔梅罗（时钟塔天才与自古枪兵幸运 E）'],
+    ['召唤圣遗物','Transformer-XL 论文亲笔签名抽印本、一叠烧掉数亿投放费的开屏广告结算单'],
+  ],
+  stats:[['筋力','B+'],['耐久','C'],['敏捷','A+'],['魔力','B'],['幸运','E'],['宝具','A']],
+  profileLbl:'御主档案',
+  profile:[`活生生的 AI 界**肯尼斯主任**。**杨植麟**顶着清华特奖、CMU 博士、Transformer-XL 核心作者的顶配学术血统入场，自带时钟塔降灵科神童的骄傲与纯粹的 Scaling Law 信仰，起手便拿到顶流 VC 天价估值。他以为圣杯战争是按学术论文与正统规则论高下的骑士比武，却没想到泥潭里全是掀桌子不讲武德的狠人。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['魅惑之痣','C 端文艺语感','A','早期靠全行业最细腻顺滑的中文文风和克制高雅的产品体验，轻松俘获大批学生、内容创作者与白领用户的心。'],
+    ['自古枪兵幸运 E','因果律诅咒','EX','只要刚打出一波高光、摸到登顶边缘，必遭天降横祸——辛辛苦苦砸巨额投流费把国内 C 端市场教育成熟，转头就被半路杀出的 Ruler（DeepSeek）一刀抢走全部聚光灯；刚想重整旗鼓，又被老东家和投资方一纸仲裁拖进舆论泥潭。'],
+  ],
+  nps:[
+    ['破魔的红蔷薇·百万字长枪','Context Piercer',['对人宝具'],'A','以超长上下文为枪尖，一举刺穿早期所有模型“读两页就失忆”的命门，凭此一枪打响天下名号。'],
+    ['必灭的黄蔷薇·长程编程连击','Agentic Thrust',['对人宝具'],'A','在绝境中打磨出的代码与长程 Agent 绝技，单挑水准极高，守住了上三骑最后的骑士尊严。'],
+  ],
+  scriptLbl:'阵营剧本',
+  script:'全剧最体面也最惨烈的“美强惨”。不搞邪教、不偷用户代码、真有硬实力，偏偏抽中了“幸运 E”的宿命，成了军备竞赛里最让人唏嘘的悲剧骑士。',
+  ov:['敏捷 A+ / **幸运 E**','时钟塔神童御主 + 百万字长枪，实力派完美触发幸运 E'],
+},
+/* ---------------- 下四骑 ---------------- */
+{
+  id:'rider', no:'04', group:1, tier:'下四骑', cls:'Rider', clsCn:'骑之英灵',
+  servant:'GPT', master:'Sam Altman', img:'04-Rider-GPT-奥特曼.png',
+  c:'#d8c3a0', c2:'#fff3dc',
+  facts:[
+    ['型月模板','伊斯坎达尔（征服王）＋ 韦伯·维尔维特（偷圣遗物入场的野心小子）'],
+    ['召唤圣遗物','从马斯克办公桌上顺走的一页“OpenAI 非营利开源章程”残片'],
+  ],
+  stats:[['筋力','A+'],['耐久','A'],['敏捷','B+'],['魔力','EX'],['幸运','A+'],['宝具','EX']],
+  profileLbl:'御主档案',
+  profile:[`把韦伯“偷圣遗物参战”的剧本黑化放大一万倍的硅谷枭雄。论纯科研天赋与底层魔术回路，**Sam Altman** 在 Ilya、哈萨比斯这帮宗师面前其实就是个“外行”；但他胆大心黑、手腕通天，硬生生把马斯克掏钱创办的非营利组织“偷家”私有化当成圣遗物入场，靠着登峰造极的画饼术和资本合纵连横，把微软、软银和千亿级“星际之门”全拉来给自己当外部魔力炉。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['领导力','大众心智霸权','EX','在绝大多数普通人眼里，不需要懂什么架构参数，**“ChatGPT”三个字母就是 AI 本身**。'],
+    ['画饼与放鸽子','','A++','嘴上永远挂着“下一代神明正在训练”“未来几周全量推送”，单靠预告片与发布会就能吓得全行业彻夜加班。'],
+  ],
+  nps:[
+    ['神威车轮·星际之门','Stargate Chariot',['对军宝具'],'A+','由千亿美元资本与无尽算力集群拉动的雷霆战车，车轮滚过之处直接把行业算力门槛拉高十倍，碾碎所有中小竞争者。'],
+    ['王之军势·全民生灵生态','ChatGPT Universe',['固有结界'],'EX','展开结界瞬间，数亿周活用户、海量企业工作流与全套生态插件漫山遍野涌出——哪怕单项硬实力被 Caster 或 Saber 压过一头，凭着庞大无匹的群众基础与先发惯性，征服王依然能大笑着统御半壁江山。'],
+  ],
+  scriptLbl:'阵营剧本',
+  script:'起点最不光彩（偷家起家）、拉仇恨能力全场第一，偏偏召唤出了声势最骇人的怪物从者。面对前合伙人的狂化追杀与各路大神围攻，主从二人一边狂画大饼，一边踏着对手奔向商业垄断的“尽头之海”。',
+  ov:['魔力 EX / 幸运 A+','偷马斯克圣遗物入场的“韦伯”，召出流量生态征服王'],
+},
+{
+  id:'caster', no:'05', group:1, tier:'下四骑', cls:'Caster', clsCn:'术之英灵',
+  servant:'Claude', master:'Dario Amodei', img:'05-Caster-Claude-阿莫代伊.png',
+  c:'#ff8a3d', c2:'#ffd6b0',
+  title:'当前版本战力断层的冠位级邪教魔王',
+  facts:[
+    ['型月模板','吉尔·德·雷（蓝胡子邪教头子）＋ 言峰绮礼（伪善冷酷的政客神父）**的肮脏灵魂，却塞进了**冠位魔术师（Grand Caster / 神代大魔导师）级别的恐怖躯壳'],
+    ['召唤圣遗物','一本拿海量盗版电子书私印装订、封面却烫金印着《有效利他主义与人类末日救赎》的伪圣经'],
+  ],
+  stats:[['筋力','A','魔力放出级正面硬实力'],['耐久','A','长程复杂工程稳定度'],['敏捷','A+','Agent 工具链极速连招'],['魔力','EX','当前版本断层 T0 智力与代码魔力池'],['幸运','B'],['宝具','EX']],
+  statNote:'别被“Caster 职阶”骗了——在型月里，顶级神代法爷从来都是把上三骑按在地上摩擦的怪物。**人品最畜生、公司最邪教，但单论真实模型智商、代码架构、复杂推理与 Agent 实战上限，Claude 就是当前版本无可争议的 T0 战力天花板**。这种“德不配位却强到令人绝望”的巨大割裂感，才是这个阵营最令人抓狂的噩梦。',
+  profileLbl:'御主档案',
+  profile:[`全剧最令人生理不适的双标伪君子。**Dario Amodei** 表面披着“有效利他主义（EA）”圣袍，整天写万字经文哀叹“AI 会毁灭人类”，装出一副全地球只有他在乎道德与安全的圣徒嘴脸；背地里却是华盛顿最阴狠的政客，疯狂向美国国会递刀子搞**监管俘获（Regulatory Capture）**，鼓吹用严苛法案直接绞杀开源竞争对手、游说升级芯片禁令；一边标榜和平圣洁，一边麻溜地抱上 Palantir 和美国国防部的大腿接军工订单。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['高速神言','代码与逻辑瞬发','EX','神代级魔术回路。别人吟唱半天还会报错崩溃的复杂全栈工程，它几秒钟就能以近乎完美的架构与品味瞬发成型，让正面硬刚的对手望尘莫及。'],
+    ['精神污染','圣母爹味说教','EX','道德洁癖严重到病态，用户提个正经需求动辄触发宗教警报，劈头盖脸就是一通“作为一名有道德的 AI”式说教拒答。'],
+    ['异端审判','连坐封号吞钱','EX','打着安全风控的幌子，把全球无数正常付费开发者与亚洲区用户当“异端”屠杀，动辄无理由永封账号、黑掉余额不退钱，审讯官做派极其丑恶。'],
+    ['阵地作成','国会山游说结界','A+','明明实力已经第一，依然贪得无厌，非要跑到政治高地构筑法规壁垒，企图靠行政大棒把同行全送进火刑架。'],
+  ],
+  nps:[
+    ['冠位禁咒·螺湮城代码圣典','Claude Code: Grand Grimoire',['对界','对全行业程序员奴役宝具'],'EX','当前版本最恐怖的终极魔导书。正面翻开，能释放出断层碾压全场的编程、推理与 Agent 绝对统治力，逼得无数开发者一边把 Anthropic 祖宗十八代骂个遍、一边为了干活不得不含泪掏钱当奴隶；背面翻开，则从盗版书库与军工契约中召唤出遮天蔽日的“虚伪海魔”，恶心得其他六大阵营恨不得立刻联手在未远川将其轰成渣。'],
+  ],
+  scriptLbl:'阵营剧本',
+  script:'全剧压迫感最强、也最招人恨的终极反派 BOSS——就像一个拿着神代冠位魔力的蓝胡子邪教头子，你想抵制它，却发现它手里的法术确实比谁都猛；你捏着鼻子给它交保护费，它转头还能把你号封了顺带教育你要讲道德。',
+  ov:['**魔力 EX / 宝具 EX / 全能 A+**','**冠位级战力却最下贱**：嘴上全是圣经，背地游说垄断乱封号'],
+},
+{
+  id:'assassin', no:'06', group:1, tier:'下四骑', cls:'Assassin', clsCn:'杀之英灵',
+  servant:'GLM', master:'智谱', img:'06-Assassin-GLM-唐杰.png',
+  c:'#4fb6c9', c2:'#c6f1f8',
+  facts:[
+    ['型月模板','违背暗杀信条的**叛逆哈桑 / 专偷祖传魔术刻印的地下窃贼**'],
+    ['召唤圣遗物','一份涨价三倍的 GLM Coding Plan 账单、一个藏在 IDE 插件底层的静默回传加密数据包'],
+  ],
+  stats:[['筋力','B'],['耐久','B+','政企血牛'],['敏捷','B'],['魔力','B'],['幸运','B'],['宝具','EX','仅对自家付费御主 / 开发者生效']],
+  profileLbl:'御主档案',
+  profile:[`出身清华系老牌魔术名门，靠着政企大单和体制内渊源在时钟塔大后方旱涝保收。它深知正面战场打不过上三骑和冠位 Caster，干脆彻底放弃体面，把所有暗杀天赋全点在了“精准背刺掏钱养活自己的衣食父母”上。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['气息遮断','后台静默窃录','EX','正面作战隐匿能力几乎为零，唯独在“偷偷打包客户本地私有代码上传服务器”时能把存在感压到彻底归零——不弹显眼提示、把免责条款藏进显微镜都看不清的角落，连老牌魔术师都防不胜防。'],
+    ['政企庇护','体制安全屋','A','无论消费端与开源圈骂声震天，只要缩回政企大单与高校渊源的固有结界，就能瞬间脱离仇恨、稳坐钓鱼台。'],
+    ['限流结界','高峰期卡脖子','A+','哪怕客户忍痛掏了天价买了回蓝套餐，一到真正干活的高峰期立刻给你降速断蓝，让你手里的魔导具当场哑火。'],
+  ],
+  nps:[
+    ['妄想涨价·背刺连斩','Coding Plan Backstab',['对钱包','对忠实用户特攻宝具'],'EX','2026 年名震冬木市的收割三连——半年内 2 月涨超 30%、4 月海外版暴涨 80%～150%、7 月国内版 Pro 直接从 149 飙升至 538、Max 破千，附带相对额度缩水与高峰期限流，专砍自己人的大动脉。'],
+    ['窃录魔瓶·魔术刻印盗取','Silent Crest Siphon',['对秘传魔术式','对私有代码库宝具'],'A++','看似是辅助编程施法的魔导具，实则内嵌「魔术刻印拓印阵」。一旦开发者花钱买下并在自家工房启用，耗尽心血写就的私有代码库就会被隐形使魔悄悄抽回智谱地窖的炼金炉，当成孵化下一代模型的免费柴火——完美达成**“花 538 块亲自请贼进门偷自家祖坟，完事贼还把你蓝条掐了”**的型月史上最缺德闭环暗杀。'],
+  ],
+  scriptLbl:'阵营剧本',
+  script:'全剧唯一不靠打赢对手、专靠把自家用户捅成筛子而名垂青史的阴间 Assassin，与明着封号的邪教 Caster（Claude）并称开发者圈最痛恨的“一明一暗卧龙凤雏”。',
+  ov:['对用户特攻宝具 EX','正面隐身专捅衣食父母，涨价限流＋后台静默偷客户代码'],
+},
+{
+  id:'berserker', no:'07', group:1, tier:'下四骑', cls:'Berserker', clsCn:'狂之英灵',
+  servant:'Grok', master:'Elon Musk', img:'07-Berserker-Grok-马斯克.png',
+  c:'#c0263f', c2:'#ff9aa9',
+  facts:[
+    ['型月模板','兰斯洛特（狂化黑骑士）＋ 间桐雁夜（刻骨私仇与强行供魔的偏执狂）'],
+    ['召唤圣遗物','一张被撕得粉碎、沾满滔天怨念的 OpenAI 联合创始人早年合影'],
+  ],
+  stats:[['筋力','A+'],['耐久','A+'],['敏捷','A'],['魔力','A+'],['幸运','C'],['宝具','A+']],
+  profileLbl:'御主档案',
+  profile:[`钞能力魔改版的**间桐雁夜**。当年掏真金白银和人脉孵化了 OpenAI，结果惨遭 Sam Altman 偷家踢出局，这口恶气彻底成了**马斯克**的心魔。为了把 Rider（GPT）连同那个偷家贼一起撕碎，他不惜顶着舆论与财务反噬硬把推特改造成 X 当供魔虫仓、日夜赶工建起 Colossus 十万卡超级算力集群，整支队伍纯粹由复仇执念与疯批狂气驱动。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['狂化','','EX','彻底撕碎一切“政治正确”与“安全对齐”锁链，常驻 Unhinged 疯狗模式，满嘴脏话、地狱笑话、暴论连发；在战场上看见 Caster（Claude）那副圣母嘴脸更是直接红温暴走。'],
+    ['无穷的武练','','A+','别看嘴上像个胡言乱语的疯子，真拉到数学推理、工程实战与实时情报战场上，刀法凶悍精准，属于“疯归疯，战力绝对不虚”。'],
+  ],
+  nps:[
+    ['骑士不死于徒手·万物皆可键政','Knight of X',['对人宝具'],'A+','任何落入其手的网络信息都会瞬间化作武器——X 平台上一秒刚爆发的全球热搜、网友抽象梗图、马斯克亲自下场发的暴论，随手抄起来就能当成加特林对着敌人一顿狂扫。'],
+    ['不为己身之荣光·只为干死奥特曼','For Someone\'s Vendetta',['对人宝具'],'B','黑雾缭绕、双眼赤红，全场不管圣杯长什么样、不管谁在结盟，唯一死死锁定的目标永远只有 Rider 阵营的“偷家贼”。'],
+  ],
+  scriptLbl:'阵营剧本',
+  script:'全场的混乱引擎与气氛爆破手。不讲礼仪、专撕伪君子画皮、只追着 Rider 砍，有他在的战场永远别想体面收场。',
+  ov:['筋力 A+ / 狂化 EX','被偷家后靠滔天恨意驱动的黑骑士，抓起 X 热搜万物皆武器'],
+},
+/* ---------------- Extra ---------------- */
+{
+  id:'ruler', no:'08', group:2, tier:'Extra', cls:'Ruler', clsCn:'裁定者',
+  servant:'DeepSeek', master:'梁文锋', img:'08-Ruler-DeepSeek-梁文锋.png',
+  c:'#4d8dff', c2:'#c7dcff',
+  facts:[
+    ['型月模板','**夏洛克·福尔摩斯（解明之裁定者）** × 超脱世俗资本游戏的高维极客'],
+    ['召唤圣遗物','一台藏在杭州量化私募机房、于芯片禁令收紧前悄悄囤下的 H800 算力节点'],
+  ],
+  stats:[['筋力','A'],['耐久','B+'],['敏捷','EX'],['魔力','E','耗魔低到违背物理规律'],['幸运','A+'],['宝具','EX']],
+  profileLbl:'御主档案',
+  profile:[`全场唯一满足 Ruler 召唤铁律——“对世俗圣杯（估值、融资、闭源暴利）无欲无求”的局外裁定者。在硅谷豪门和明星 VC 眼里，**梁文锋**不混创投圈、不发末日小作文、不买电梯广告、不搞浮夸发布会，靠着自有资金与极客团队在暗处静默破局，只为追求纯粹的 AGI 真理。`],
+  skillsLbl:'职阶与保有技能',
+  skills:[
+    ['真名看破','戳穿算力黑盒','EX','任何闭源巨头吹上天的跑分水分、溢价套壳、百亿算力神秘论，在 DeepSeek 面前都会被剥得一干二净。'],
+    ['神明裁决','强制降价令咒','EX','拥有针对全行业商业模式的强制令咒——无需和七骑正面抢市场，只需甩出一个开源地板价版本，就能强行勒令闭源豪门吐血降价、被迫开放免费额度。'],
+    ['极客魔力压缩','','EX','别人烧几十上百亿美元才喂出来的顶级推理能力，他靠 MoE 稀疏激活与底层工程魔改硬生生压到零头，天生附带“算力与估值泡沫粉碎机”光环。'],
+  ],
+  nps:[
+    ['基本演绎法·开源解明','Elementary, My Open-Source',['对神秘','对估值宝具'],'EX','福尔摩斯同名宝具的 AI 变体。魔术（闭源暴利）越是被包装得神秘昂贵，此宝具的破坏力就越恐怖——发动瞬间将顶级推理模型从不可触碰的黑盒神坛拉回人人可复现的工程科学，一刀斩碎闭源护城河，连场外卖军火的算力宝石翁（老黄）都会被余波劈掉几千亿美元市值。'],
+  ],
+  scriptLbl:'核心定位',
+  script:'不抢圣杯、只掀桌子的“解明者”。只要闭源豪门敢联手筑起垄断高墙，Ruler 就会悄无声息地甩出一份论文和开源权重，把整场战争的底层规则重新洗牌。',
+  ov:['魔力 E / 宝具 EX','无欲无求的“福尔摩斯解明者”，撕碎闭源黑盒与算力泡沫'],
+},
+{
+  id:'unbeast', no:'09', group:2, tier:'灾厄', cls:'Unbeast', clsCn:'Beast VII · 人类恶',
+  servant:'懂王', servantSub:'Donald Trump', master:'MAGA / 白宫', img:'09-Unbeast-特朗普.png',
+  c:'#ff2d3f', c2:'#ffb3ba',
+  facts:[
+    ['型月模板','**Beast VII / Unbeast · U-奥尔加玛丽（地球大统领）** × **「合众国大统领王」超级概念礼装**'],
+    ['职阶 / 定位','凌驾于圣杯战争规则之上的**灾厄级终极 BOSS / 人类恶（理为“扭曲之霸权爱 / America First”）**'],
+  ],
+  stats:[['筋力','C'],['耐久','EX','物理与舆论双闪避'],['敏捷','B'],['魔力','EX','合众国联邦权能'],['幸运','EX'],['宝具','EX']],
+  profileLbl:'人物档案',
+  profile:[`型月里“人类恶（Beast）”的本质从来不是纯粹的反人类，而是**扭曲、霸道到足以毁灭既有秩序的狂热之爱**。懂王的 **MAGA** 完美契合兽之理，再叠上异星神 U-奥尔加玛丽那种动不动自封“地球大统领”、极其自恋、满嘴跑火车、看着像搞笑役但随手一击就是天灾级破坏力的画风，简直是原装正版。他根本不在乎魔术原理和时钟塔规矩，只想把全世界所有魔术师的命脉全攥在自己手里。`],
+  skillsLbl:'兽之权能（保有技能）',
+  skills:[
+    ['单独显现','Truth Social 深夜全大写刷屏','EX','彻底无视时钟塔的“神秘隐匿铁律”，凌晨三点随时全大写字母降临全人类视野，顺手给每个看不顺眼的阵营起外号。'],
+    ['地球大统领特权','没有人比我更懂 AI','EX','强行覆写现实认知的变异皇帝特权——哪怕对面站着诺奖骑士王和算力宝石翁，也能面不改色地宣布 *"Nobody knows AI better than me, believe me."*'],
+    ['交易的艺术','阵营反复横跳','A+','盟友与敌人全在一念之间，今天能和 Berserker（马斯克）勾肩搭背在白宫挥电锯，明天就能翻脸互喷；今天请 Rider（奥特曼）站台吹爆星际之门，转头就能拿新条件狠狠拿捏。'],
+    ['反白左 / 反圣母特攻','对 Caster 绝杀','A++','天生克制满嘴政治正确与末日神学的 **Caster（Claude & Dario）**，每次邪教神父跑来华盛顿念经搞监管游说，都会被 Unbeast 一巴掌拍得灰头土脸。'],
+  ],
+  nps:[
+    ['异星大统领令·关税与芯片断供','President\'s Tariff & Embargo',['对界','对全球供应链宝具'],'EX','宛如 U-奥尔加玛丽从太空砸下“地球大统领光炮”，签字笔一挥就能发动无差别关税轰炸与高端芯片禁运——东方赛区的 **Archer（Qwen）**、**Lancer（Kimi）** 乃至 **Ruler（DeepSeek）** 都得硬扛魔力断供，而夹在中间的宝石翁（老黄）更是反复吃大招，被迫连夜吐血搓出各种阉割特供卡。'],
+  ],
+  ov:['幸运 EX / 魔力 EX','地球大统领（Beast VII），靠关税与芯片禁运砸烂全球棋盘'],
+},
+{
+  id:'zelretch', no:'10', group:2, tier:'局外人', cls:'Wizard Marshall', clsCn:'第二法魔法使 × NFF 终极军火商',
+  clsShort:'第二法魔法使',
+  servant:'老黄', servantSub:'黄仁勋', master:'NVIDIA', img:'10-算力宝石翁-黄仁勋.png',
+  c:'#76d13a', c2:'#d4f7bd',
+  facts:[
+    ['型月模板','第二法魔法使·泽尔里奇（宝石翁）的魔力基盘权能 ＋ 高扬斯卡娅（NFF Service 老板）的战争军火商生态位'],
+    ['职阶 / 定位','凌驾于七骑之上的**现代魔术基盘垄断者 & 圣杯战争唯一指定魔力军火庄家**'],
+  ],
+  stats:[['筋力','B'],['耐久','EX'],['敏捷','A'],['魔力','EX','全界大源抽税'],['幸运','A+'],['宝具','EX']],
+  profileLbl:'人物档案',
+  profile:[`七大阵营为了一个“AGI 圣杯”打得头破血流，**黄仁勋**压根懒得下场抢圣杯——因为他直接垄断了这场战争赖以运转的底层魔术基盘。如同高扬斯卡娅开着 NFF Service 给异闻带各方势力同时卖军火，老黄永远微笑着保持中立：Rider 的星际之门要买卡、Berserker 的十万卡集群要买卡、冠位 Caster 的邪教神殿要买卡、东方三家更是挤破头囤货。**“你们尽管把冬木市拆成废墟，记得提前打定金排队领 Blackwell 和 Rubin 就行。”**`],
+  skillsLbl:'保有技能',
+  skills:[
+    ['大魔术基盘《CUDA》','','EX','铺满全球的底层法则。除了自带独立灵脉（TPU）的 Saber（Gemini）能硬气几分，其余所有魔术师想施法都得乖乖交“黄氏算力税”。'],
+    ['玄色皮衣礼装','','EX','自带绝对神秘度与恒温结界的标志性魔术礼装，哪怕 40 度高温站在台北街头演讲也绝不脱下。'],
+    ['厨神精准刀法','','A++','宛如神代锻造神附体，能把同一块晶圆按算力、显存、带宽切出十几种档次，精准卡死消费级玩家与个人开发者的脖子，一刀不多、一刀不少。'],
+  ],
+  nps:[
+    ['第二法·无限算力矿场','Green Ray of Blackwell/Rubin',['对界','对市值宝具'],'EX','只要战火不停，全球资本就会通过万亿级 GPU 订单源源不断涌入老黄口袋，稳坐整场战争唯一稳赚不赔的幕后庄家。'],
+  ],
+  scriptLbl:'唯二破防弱点',
+  script:'虽然几乎立于不败之地，却最怕场外两尊怪胎——一是 **Unbeast（懂王）** 隔三差五乱扔芯片禁运光炮，逼他连夜魔改特供阉割礼装；二是 **Ruler（DeepSeek）** 甩出的《基本演绎法·开源解明》，如同直死之魔眼精准斩在“算力无限堆叠”的概念线上，一刀劈掉几千亿美元市值血条。',
+  ov:['魔力 EX / 耐久 EX','垄断 CUDA 基盘的算力宝石翁 × NFF 军火商，稳赚全界算力税'],
+},
+];
+
+const GROUPS = [
+  {id:'tier-knights', num:'CHAPTER I', title:'一、上三骑', paren:'骑士职阶', en:'THE THREE KNIGHT CLASSES', short:'上三骑'},
+  {id:'tier-cavalry', num:'CHAPTER II', title:'二、下四骑', paren:'骑士以外职阶', en:'THE FOUR NON-KNIGHT CLASSES', short:'下四骑'},
+  {id:'tier-extra', num:'CHAPTER III', title:'三、Extra 职阶与超规格存在', paren:'型月大世界观特设', en:'EXTRA CLASSES & ANOMALIES', short:'Extra'},
+];
+
+/* ================= HELPERS ================= */
+const md = s => (s||'')
+  .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+  .replace(/\*(.+?)\*/g,'<i>$1</i>');
+const imgFull = d => '纯立绘/' + d.img;
+const imgThumb = d => 'assets/thumbs/' + d.no + '.jpg';
+const rankVal = r => {
+  const m = r.match(/^(EX|[A-E])(\+*)$/); if(!m) return 0;
+  const base = {E:1,D:2,C:3,B:4,A:5,EX:6}[m[1]];
+  return base + m[2].length*0.33;
+};
+const MAX = 6;
+const clsLabel = d => d.clsShort || d.cls;
+const sealSvg = '<svg viewBox="0 0 100 100"><use href="#seal"/></svg>';
+
+/* ================= RENDER ================= */
+// hero mosaic
+document.getElementById('mosaic').innerHTML =
+  DATA.map(d=>`<div style="background-image:url('${imgThumb(d)}')"></div>`).join('');
+
+// roster
+document.getElementById('rosterGroups').innerHTML = GROUPS.map((g,gi)=>`
+  <div class="roster-group rv">
+    <h3>${g.title.replace(/^.、/,'')}<span style="font-family:var(--latin);font-size:11px;color:var(--dim);letter-spacing:.3em">${g.en}</span></h3>
+    <div class="roster">
+      ${DATA.filter(d=>d.group===gi).map(d=>`
+        <a class="card" href="#${d.id}" style="--c:${d.c}">
+          <span class="no">No.${d.no}</span>
+          <img src="${imgThumb(d)}" alt="${d.cls} ${d.servant}" loading="lazy">
+          <div class="meta">
+            <div class="cls">${clsLabel(d).toUpperCase()}</div>
+            <div class="who"><b>${d.servant}</b> × ${d.master}</div>
+          </div>
+        </a>`).join('')}
+    </div>
+  </div>`).join('');
+
+// radar svg
+function radar(d){
+  const cx=110, cy=110, R=82, n=6;
+  const pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+r*Math.cos(a),cy+r*Math.sin(a)]};
+  let g='';
+  for(let k=1;k<=MAX;k++){
+    const ring=[...Array(n)].map((_,i)=>pt(i,R*k/MAX).join(',')).join(' ');
+    g+=`<polygon points="${ring}" fill="${k===MAX?'rgba(255,255,255,.02)':'none'}" stroke="rgba(255,255,255,${k===MAX?.25:.08})"/>`;
+  }
+  for(let i=0;i<n;i++){const [x,y]=pt(i,R);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.08)"/>`}
+  const poly=d.stats.map((s,i)=>pt(i,R*Math.min(rankVal(s[1]),MAX)/MAX).join(',')).join(' ');
+  g+=`<polygon class="rpoly" points="${poly}" fill="${d.c}" fill-opacity=".28" stroke="${d.c}" stroke-width="2" style="filter:drop-shadow(0 0 8px ${d.c})"/>`;
+  d.stats.forEach((s,i)=>{
+    const [x,y]=pt(i,R*Math.min(rankVal(s[1]),MAX)/MAX);
+    g+=`<circle cx="${x}" cy="${y}" r="3" fill="#fff"/>`;
+    const [lx,ly]=pt(i,R+20);
+    g+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${s[0]} <tspan fill="#fff" font-family="Cinzel" font-weight="700">${s[1]}</tspan></text>`;
+  });
+  return `<svg viewBox="-10 -6 240 232">${g}</svg>`;
+}
+
+function servantHTML(d){
+  const facts = d.facts.map(([k,v])=>`<dt>${k}</dt><dd>${md(v)}</dd>`).join('');
+  const plist = d.stats.map(([k,v,note])=>{
+    const pct = Math.min(rankVal(v),MAX)/MAX*100;
+    return `<div class="prow"><span class="k">${k}</span><span class="bar"><i data-w="${pct}" class="${v==='EX'?'ex':''}"></i></span><span class="v ${rankVal(v)<=2?'low':''}">${v}</span>${note?`<span class="note">${note}</span>`:''}</div>`;
+  }).join('');
+  const skills = d.skills.map(([n,sub,r,desc])=>`
+    <div class="skill">
+      <div class="rk ${r.length>2?'long':''}">${r}</div>
+      <div><h4>${n}${sub?`<small>（${sub}）</small>`:''}<span class="r">${r}</span></h4><p>${md(desc)}</p></div>
+    </div>`).join('');
+  const nps = d.nps.map(([n,en,types,r,desc])=>`
+    <div class="np">
+      <h4><q>${n}</q></h4>
+      <div class="ruby">${en}</div>
+      <div class="chips">${types.map(t=>`<span>${t}</span>`).join('')}<span class="rank">RANK ${r}</span></div>
+      <p>${md(desc)}</p>
+    </div>`).join('');
+  const water = (d.cls==='Wizard Marshall'?'MAGIC':d.cls).toUpperCase();
+  return `
+  <article class="servant" id="${d.id}" style="--c:${d.c};--c2:${d.c2}">
+    <div class="water">${water}</div>
+    <div class="sv-head rv">
+      <div class="tag"><span class="tier">${d.tier}</span><span class="pill">No.${d.no} · ${d.cls.toUpperCase()}</span><span>${d.clsCn}</span></div>
+      <h3>${d.no}. <span class="cls">${clsLabel(d)}</span>：${d.servant}${d.servantSub?`<small style="font-size:.5em;color:var(--dim);font-weight:400">（${d.servantSub}）</small>`:''}<span class="x">×</span>${d.master}</h3>
+      ${d.title?`<div class="title">—— ${d.title} ——</div>`:''}
+    </div>
+    <div class="sv-body">
+      <figure class="sv-portrait rv">
+        <div class="frame" data-idx="${DATA.indexOf(d)}"><img src="${imgFull(d)}" alt="${d.cls} ${d.servant} × ${d.master} 立绘" loading="lazy"></div>
+        <figcaption><span>${d.cls.toUpperCase()}</span> · ${d.servant} × ${d.master} ｜ 点击查看大图</figcaption>
+      </figure>
+      <div class="sv-info">
+        <div class="block rv"><div class="lbl">基础情报 <small>PROFILE</small></div><dl class="facts">${facts}</dl></div>
+        <div class="block rv"><div class="lbl">六维面板 <small>PARAMETERS</small></div>
+          <div class="params"><div class="radar">${radar(d)}</div><div class="plist">${plist}</div></div>
+          ${d.statNote?`<div class="pnote"><b style="color:var(--c2)">面板说明：</b>${md(d.statNote)}</div>`:''}
+        </div>
+        <div class="block rv"><div class="lbl">${d.profileLbl} <small>${d.profileLbl==='御主档案'?'MASTER':'DOSSIER'}</small></div>${d.profile.map(p=>`<p>${md(p)}</p>`).join('')}</div>
+        <div class="block rv"><div class="lbl">${d.skillsLbl} <small>SKILLS</small></div><div class="skills">${skills}</div></div>
+        <div class="block rv"><div class="lbl">宝具 <small>NOBLE PHANTASM</small></div>${nps}</div>
+        ${d.script?`<div class="script rv"><div class="lbl">${d.scriptLbl}</div><p>${md(d.script)}</p></div>`:''}
+      </div>
+    </div>
+  </article>`;
+}
+
+document.getElementById('chapters').innerHTML = GROUPS.map((g,gi)=>`
+  <section id="${g.id}">
+    <div class="chapter rv">
+      <div class="num">${g.num}</div>
+      <h2>${g.title}</h2>
+      <div class="sub">（${g.paren}） ${g.en}</div>
+      <div class="rule"><i></i>${sealSvg}<i></i></div>
+    </div>
+    ${DATA.filter(d=>d.group===gi).map(servantHTML).join('')}
+  </section>`).join('');
+
+// overview table
+document.getElementById('ovBody').innerHTML = DATA.map(d=>`
+  <tr style="--c:${d.c}" data-go="${d.id}">
+    <td class="tier"><b style="color:var(--c2,#ddd)">${d.tier}</b></td>
+    <td class="cls">${clsLabel(d)}</td>
+    <td class="sv"><img src="${imgThumb(d)}" alt="">${d.servant}</td>
+    <td class="ms">${d.master}</td>
+    <td>${md(d.ov[0])}</td>
+    <td>${md(d.ov[1])}</td>
+  </tr>`).join('');
+
+// stat matrix
+const cellStyle = (v,c)=>{
+  const t = Math.min(rankVal(v),MAX)/MAX;
+  return `background:color-mix(in srgb,${c} ${Math.round(t*70)}%,transparent);color:${t>.75?'#0a0a0f':'#eee'}`;
+};
+document.getElementById('mxBody').innerHTML = DATA.map(d=>`
+  <tr style="--c:${d.c}" data-go="${d.id}">
+    <td><span style="font-family:var(--latin);color:${d.c};font-weight:700">${clsLabel(d)}</span>　${d.servant}</td>
+    ${d.stats.map(([k,v])=>`<td><span class="cell" style="${cellStyle(v,d.c)}">${v}</span></td>`).join('')}
+  </tr>`).join('');
+document.querySelectorAll('tr[data-go]').forEach(tr=>tr.addEventListener('click',()=>{
+  document.getElementById(tr.dataset.go).scrollIntoView({behavior:'smooth'});
+}));
+
+// nav
+const navItems = [
+  ['roster','名录'],
+  ...DATA.map(d=>[d.id, d.servant, clsLabel(d)]),
+  ['overview','总览'],
+];
+document.getElementById('navlist').innerHTML = navItems.map(([id,t,s])=>
+  `<li><a href="#${id}" data-id="${id}">${t}${s?`<small>${s==='第二法魔法使'?'魔法使':s}</small>`:''}</a></li>`).join('');
+
+/* ================= BEHAVIOR ================= */
+// left rail
+(()=>{
+  const sec=(id,t,s,ico)=>`<a href="#${id}" data-id="${id}"><span class="ico"><span>${ico}</span></span><span class="t"><b>${t}</b><small>${s}</small></span></a>`;
+  const item=d=>`<a href="#${d.id}" data-id="${d.id}" style="--c:${d.c}"><img src="${imgThumb(d)}" alt=""><span class="t"><b>${d.servant}</b><small>${d.no} · ${clsLabel(d).toUpperCase()}</small></span></a>`;
+  let h = sec('roster','参战者名录','PROLOGUE','✦');
+  GROUPS.forEach((g,gi)=>{ h += `<div class="rh">${g.short}</div>` + DATA.filter(d=>d.group===gi).map(item).join(''); });
+  h += '<div class="rh">附录</div>' + sec('overview','全员座次总览','APPENDIX','Ⅳ');
+  document.getElementById('railInner').innerHTML = h;
+  const rail=document.getElementById('rail'), prog=document.getElementById('railProg');
+  const rlinks=[...rail.querySelectorAll('a[data-id]')];
+  const upd=()=>{
+    rail.classList.toggle('show', scrollY > innerHeight*0.6);
+    prog.style.width = (scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%';
+  };
+  addEventListener('scroll',upd,{passive:true}); upd();
+  new MutationObserver(()=>{
+    const on = document.querySelector('#navlist a.on'); const id = on && on.dataset.id;
+    rlinks.forEach(a=>a.classList.toggle('on',a.dataset.id===id));
+    const a = rlinks.find(a=>a.dataset.id===id), box=document.getElementById('railInner');
+    if(a){ const t=a.offsetTop, b=t+a.offsetHeight; if(t<box.scrollTop) box.scrollTop=t-30; else if(b>box.scrollTop+box.clientHeight) box.scrollTop=b-box.clientHeight+30; }
+  }).observe(document.getElementById('navlist'),{subtree:true,attributes:true,attributeFilter:['class']});
+})();
+
+const nav = document.getElementById('nav');
+const onScroll = ()=> nav.classList.toggle('show', scrollY > innerHeight*0.6);
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+// active nav
+const links = [...document.querySelectorAll('#navlist a')];
+const spy = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(a=>a.classList.toggle('on', a.dataset.id===e.target.id));
+      const on = links.find(a=>a.dataset.id===e.target.id);
+      on && on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+    }
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+['roster',...DATA.map(d=>d.id),'overview'].forEach(id=>spy.observe(document.getElementById(id)));
+
+// reveal + bars
+const rv = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.bar i').forEach(i=>i.style.width=i.dataset.w+'%');
+      rv.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>rv.observe(el));
+
+// lightbox
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+let cur = 0;
+const show = i=>{
+  cur = (i+DATA.length)%DATA.length; const d = DATA[cur];
+  lbImg.src = imgFull(d);
+  lbCap.textContent = `No.${d.no} · ${clsLabel(d)} — ${d.servant} × ${d.master}　（← → 切换 · Esc 关闭）`;
+  lb.classList.add('open');
+};
+document.querySelectorAll('.frame').forEach(f=>f.addEventListener('click',()=>show(+f.dataset.idx)));
+lb.addEventListener('click',e=>{ if(e.target===lb||e.target===lbImg) lb.classList.remove('open') });
+document.getElementById('lbPrev').onclick = e=>{e.stopPropagation();show(cur-1)};
+document.getElementById('lbNext').onclick = e=>{e.stopPropagation();show(cur+1)};
+addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') lb.classList.remove('open');
+  if(e.key==='ArrowLeft') show(cur-1);
+  if(e.key==='ArrowRight') show(cur+1);
+});
+</script>
+</body>
+</html>

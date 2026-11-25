@@ -3,11 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function(){
+  var t = localStorage.getItem('fateai-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
 <title>FATE/AI · 型月 AI 圣杯战争 完全体设定集</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2307080d'/%3E%3Ctext x='6' y='46' font-family='Georgia,serif' font-weight='700' font-size='40' fill='%23e8c77a'%3EF%3C/text%3E%3Cpolygon points='32,58 37,58 56,6 52,4' fill='%23ff2d47'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700&family=Noto+Serif+SC:wght@400;600;900&family=Noto+Serif+JP:wght@400;600;900&family=EB+Garamond:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#07080d;
@@ -20,6 +26,15 @@
   --red2:#ff3b52;
   --ink:#e9e4d8;
   --dim:#9a958a;
+  --w:255,255,255;
+  --hi:#fff;
+  --t2:#d8d2c4;
+  --shade:rgba(0,0,0,.35);
+  --bgrgb:7,8,13;
+  --railbg:linear-gradient(180deg,rgba(13,15,24,.85),rgba(13,15,24,.6));
+  --grain:.07;
+  --sky:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(60,70,140,.35),transparent 60%),radial-gradient(ellipse 60% 50% at 100% 100%,rgba(120,10,30,.18),transparent 60%),linear-gradient(#07080d,#0a0b12 40%,#07080d);
+  --c:#c9a961;--c2:#f1dca0;
   --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
   --latin:"Cinzel","Trajan Pro","Times New Roman",serif;
 }
@@ -36,16 +51,14 @@ body{
 body::before{ /* night sky + vignette */
   content:"";position:fixed;inset:0;z-index:-2;
   background:
-    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(60,70,140,.35),transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 100%,rgba(120,10,30,.18),transparent 60%),
-    linear-gradient(#07080d,#0a0b12 40%,#07080d);
+    var(--sky);
 }
 body::after{ /* film grain */
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:var(--grain);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 b,strong{color:var(--gold2);font-weight:600}
-i{font-style:italic;color:#fff}
+i{font-style:italic;color:var(--hi)}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 
@@ -54,7 +67,7 @@ img{display:block;max-width:100%}
   position:fixed;top:0;left:0;right:0;z-index:50;height:56px;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:0 28px;
-  background:linear-gradient(rgba(7,8,13,.95),rgba(7,8,13,.75));
+  background:linear-gradient(rgba(var(--bgrgb),.95),rgba(var(--bgrgb),.8));
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
   transform:translateY(-100%);transition:transform .4s;
@@ -73,6 +86,7 @@ img{display:block;max-width:100%}
 
 /* ---------- hero ---------- */
 .hero{
+  --ink:#e9e4d8;--dim:#9a958a;--gold:#c9a961;--gold2:#f1dca0;--red2:#ff3b52;color:var(--ink);
   position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;
   overflow:hidden;padding:80px 20px 60px;
 }
@@ -142,7 +156,7 @@ img{display:block;max-width:100%}
 .roster-group h3::after{content:"";flex:1;height:1px;background:var(--line)}
 .roster{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
 .card{
-  position:relative;display:block;overflow:hidden;border:1px solid rgba(255,255,255,.08);
+  position:relative;display:block;overflow:hidden;border:1px solid rgba(var(--w),.08);
   background:#0c0d14;aspect-ratio:1122/1290;
   transition:transform .35s,border-color .35s,box-shadow .35s;
 }
@@ -158,9 +172,8 @@ img{display:block;max-width:100%}
 
 /* ---------- servant sheet ---------- */
 .servant{
-  --c:#c9a961;--c2:#f1dca0;
   position:relative;margin:70px 0 30px;padding:46px 0 10px;
-  border-top:1px solid rgba(255,255,255,.06);
+  border-top:1px solid rgba(var(--w),.06);
 }
 .servant .water{
   position:absolute;top:-10px;right:-10px;font-family:var(--latin);font-weight:900;
@@ -195,7 +208,7 @@ img{display:block;max-width:100%}
 .sv-portrait figcaption span{font-family:var(--latin)}
 
 .block{
-  position:relative;background:var(--panel);border:1px solid rgba(255,255,255,.07);
+  position:relative;background:var(--panel);border:1px solid rgba(var(--w),.07);
   padding:22px 26px;margin-bottom:18px;
 }
 .block>.lbl{
@@ -208,27 +221,27 @@ img{display:block;max-width:100%}
 
 .facts{display:grid;grid-template-columns:auto 1fr;gap:10px 20px}
 .facts dt{font-size:13px;letter-spacing:.2em;color:var(--c2);white-space:nowrap;padding-top:2px}
-.facts dd{color:#ddd8cc}
+.facts dd{color:var(--t2)}
 
 /* parameters */
 .params{display:grid;grid-template-columns:220px 1fr;gap:26px;align-items:center}
 .radar svg{width:100%;height:auto;overflow:visible}
-.radar text{font-family:var(--serif);font-size:12px;fill:#bdb6a6}
+.radar text{font-family:var(--serif);font-size:12px;fill:var(--t2)}
 .plist{display:grid;gap:9px}
 .prow{display:grid;grid-template-columns:3.2em 1fr 3.2em;gap:12px;align-items:center}
 .prow .k{font-size:13px;letter-spacing:.15em;color:var(--dim)}
-.prow .bar{height:8px;background:rgba(255,255,255,.06);position:relative;overflow:hidden}
+.prow .bar{height:8px;background:rgba(var(--w),.06);position:relative;overflow:hidden}
 .prow .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 40%,transparent),var(--c));box-shadow:0 0 12px var(--c);width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
 .prow .bar i.ex{background:linear-gradient(90deg,var(--c),#fff,var(--c));background-size:200% 100%;animation:shine 2.5s linear infinite}
 @keyframes shine{to{background-position:-200% 0}}
-.prow .v{font-family:var(--latin);font-weight:700;font-size:16px;color:#fff;text-align:right}
+.prow .v{font-family:var(--latin);font-weight:700;font-size:16px;color:var(--hi);text-align:right}
 .prow .v.low{color:var(--red2)}
 .prow .note{grid-column:2/4;margin-top:-6px;font-size:12px;color:var(--dim)}
-.pnote{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.12);font-size:14.5px;color:#d6d0c2}
+.pnote{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(var(--w),.12);font-size:14.5px;color:var(--t2)}
 
 /* skills */
 .skills{display:grid;gap:12px}
-.skill{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.06)}
+.skill{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:14px 0;border-top:1px solid rgba(var(--w),.06)}
 .skill:first-child{border-top:0;padding-top:2px}
 .skill .rk{
   width:52px;height:52px;display:grid;place-items:center;font-family:var(--latin);font-weight:900;font-size:15px;
@@ -238,14 +251,14 @@ img{display:block;max-width:100%}
 .skill h4{font-size:16.5px;font-weight:900;letter-spacing:.05em}
 .skill h4 small{font-weight:400;color:var(--c2);font-size:13.5px;margin-left:4px}
 .skill h4 .r{font-family:var(--latin);color:var(--c);margin-left:8px;font-size:14px}
-.skill p{color:#cfc9bb;font-size:14.5px;margin-top:4px}
+.skill p{color:var(--t2);font-size:14.5px;margin-top:4px}
 
 /* noble phantasm */
 .np{
   position:relative;overflow:hidden;margin-top:14px;padding:22px 24px 20px;
   background:
     linear-gradient(115deg,color-mix(in srgb,var(--c) 22%,transparent),transparent 55%),
-    rgba(0,0,0,.35);
+    var(--shade);
   border:1px solid color-mix(in srgb,var(--c) 45%,transparent);
 }
 .np:first-of-type{margin-top:0}
@@ -256,9 +269,9 @@ img{display:block;max-width:100%}
 .np h4 q{quotes:"《" "》"}
 .np .ruby{font-family:var(--latin);color:var(--c2);font-size:14px;letter-spacing:.12em;margin-top:2px}
 .np .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 10px}
-.np .chips span{font-size:12px;padding:2px 10px;border:1px solid rgba(255,255,255,.22);color:#ddd;letter-spacing:.1em}
+.np .chips span{font-size:12px;padding:2px 10px;border:1px solid rgba(var(--w),.22);color:var(--t2);letter-spacing:.1em}
 .np .chips span.rank{border-color:var(--c);background:var(--c);color:#0a0a0f;font-family:var(--latin);font-weight:700}
-.np p{color:#d8d2c4;font-size:14.5px}
+.np p{color:var(--t2);font-size:14.5px}
 
 .script{
   position:relative;padding:26px 30px 24px 64px;margin-bottom:18px;
@@ -267,20 +280,20 @@ img{display:block;max-width:100%}
 }
 .script::before{content:"“";position:absolute;left:18px;top:2px;font-size:72px;line-height:1;color:var(--red2);font-family:Georgia,serif;opacity:.8}
 .script .lbl{font-size:12px;letter-spacing:.35em;color:var(--red2);margin-bottom:6px;font-weight:600}
-.script p{font-size:16px;color:#eee7d6}
+.script p{font-size:16px;color:var(--t2)}
 
 /* ---------- overview ---------- */
 .tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
 table{width:100%;border-collapse:collapse;min-width:980px;font-size:14.5px}
-th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top}
-thead th{font-size:12.5px;letter-spacing:.25em;color:var(--gold);background:rgba(0,0,0,.35);font-weight:600;white-space:nowrap}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(var(--w),.06);vertical-align:top}
+thead th{font-size:12.5px;letter-spacing:.25em;color:var(--gold);background:var(--shade);font-weight:600;white-space:nowrap}
 tbody tr{cursor:pointer;transition:background .2s}
-tbody tr:hover{background:rgba(255,255,255,.04)}
+tbody tr:hover{background:rgba(var(--w),.04)}
 td.tier{white-space:nowrap;color:var(--dim);font-size:13px}
 td.cls{font-family:var(--latin);font-weight:700;white-space:nowrap;color:var(--c);letter-spacing:.06em}
 td.sv{font-weight:900;white-space:nowrap;display:flex;align-items:center;gap:10px}
 td.sv img{width:34px;height:34px;object-fit:cover;object-position:center 12%;border:1px solid var(--c);border-radius:50%}
-td.ms{white-space:nowrap;color:#d6d0c2}
+td.ms{white-space:nowrap;color:var(--t2)}
 
 .matrix{margin-top:40px}
 .matrix h3{font-size:14px;letter-spacing:.4em;color:var(--gold);font-weight:600;margin-bottom:14px}
@@ -302,7 +315,7 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
 .rail.show{opacity:1;transform:none;pointer-events:auto}
 .rail-inner{
   overflow-y:auto;scrollbar-width:none;padding:14px 0 14px;
-  background:linear-gradient(180deg,rgba(13,15,24,.85),rgba(13,15,24,.6));
+  background:var(--railbg);
   border:1px solid var(--line);backdrop-filter:blur(6px);position:relative;
 }
 .rail-inner::-webkit-scrollbar{display:none}
@@ -316,19 +329,19 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
   display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;
   padding:6px 16px 6px 15px;border-left:3px solid transparent;transition:background .25s,border-color .25s;
 }
-.rail a img{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:center 12%;border:1px solid rgba(255,255,255,.15);filter:grayscale(.6) brightness(.8);transition:.25s}
+.rail a img{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:center 12%;border:1px solid rgba(var(--w),.15);filter:grayscale(.6) brightness(.8);transition:.25s}
 .rail a .t{line-height:1.25;min-width:0}
-.rail a .t b{display:block;font-size:13.5px;color:#d9d3c5;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail a .t b{display:block;font-size:13.5px;color:var(--t2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rail a .t small{display:block;font-family:var(--latin);font-size:10px;letter-spacing:.15em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rail a .ico{width:30px;height:30px;display:grid;place-items:center;color:var(--gold);font-family:var(--latin);font-size:13px;border:1px solid var(--line);transform:rotate(45deg)}
 .rail a .ico span{transform:rotate(-45deg)}
-.rail a:hover{background:rgba(255,255,255,.04)}
+.rail a:hover{background:rgba(var(--w),.04)}
 .rail a:hover img{filter:none}
 .rail a.on{border-left-color:var(--c);background:linear-gradient(90deg,color-mix(in srgb,var(--c) 22%,transparent),transparent)}
 .rail a.on img{filter:none;border-color:var(--c);box-shadow:0 0 10px var(--c)}
-.rail a.on .t b{color:#fff}
+.rail a.on .t b{color:var(--hi)}
 .rail a.on .t small{color:var(--c)}
-.rail .prog{height:2px;background:rgba(255,255,255,.08);margin-top:10px;position:relative}
+.rail .prog{height:2px;background:rgba(var(--w),.08);margin-top:10px;position:relative}
 .rail .prog i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--red),var(--gold2));width:0}
 @media (min-width:1280px){
   .rail{display:flex}
@@ -373,6 +386,71 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
   .card .meta{padding:10px}
   .hero .mosaic{grid-template-columns:repeat(5,1fr)}
 }
+
+/* ---------- per-character accent (dark / light) ---------- */
+[style*="--cd"]{--c:var(--cd);--c2:var(--c2d,var(--cd))}
+html[data-theme="light"] [style*="--cd"]{--c:var(--cl,var(--cd));--c2:color-mix(in srgb,var(--cl,var(--cd)) 78%,#000)}
+
+/* ---------- light theme ---------- */
+html[data-theme="light"]{
+  --bg:#f3eee3;--bg2:#ebe4d4;
+  --panel:rgba(255,253,247,.86);
+  --line:rgba(138,100,32,.32);
+  --gold:#8a6420;--gold2:#7a4c0c;
+  --red:#a0102a;--red2:#b5122e;
+  --ink:#211c15;--dim:#7a7163;
+  --w:40,30,10;--hi:#14110c;--t2:#3a3329;
+  --shade:rgba(138,100,32,.07);
+  --bgrgb:246,241,231;
+  --railbg:linear-gradient(180deg,rgba(255,252,245,.92),rgba(250,246,236,.85));
+  --grain:.05;
+  --sky:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(201,169,97,.25),transparent 60%),radial-gradient(ellipse 60% 50% at 100% 100%,rgba(179,18,43,.07),transparent 60%),linear-gradient(#f6f1e7,#efe8d9 40%,#f4efe4);
+  color-scheme:light;
+}
+html[data-theme="light"] .block{box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 10px 30px -20px rgba(80,60,20,.35)}
+html[data-theme="light"] .np{background:linear-gradient(115deg,color-mix(in srgb,var(--c) 14%,transparent),transparent 60%),rgba(255,255,255,.55)}
+html[data-theme="light"] .np::before{color:var(--c2)}
+html[data-theme="light"] .script{background:linear-gradient(90deg,rgba(179,18,43,.08),transparent 70%)}
+html[data-theme="light"] .prow .bar i{box-shadow:none}
+html[data-theme="light"] .prow .bar i.ex{background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 30%,#fff),var(--c));background-size:200% 100%}
+html[data-theme="light"] .sv-portrait .frame{box-shadow:0 0 0 6px rgba(255,255,255,.7),0 0 0 7px color-mix(in srgb,var(--c) 35%,transparent),0 30px 60px -30px rgba(60,40,10,.6)}
+html[data-theme="light"] .card{border-color:rgba(0,0,0,.1);box-shadow:0 10px 30px -18px rgba(60,40,10,.5)}
+html[data-theme="light"] .servant .water{-webkit-text-stroke-color:color-mix(in srgb,var(--c) 35%,transparent)}
+html[data-theme="light"] .rail a img{filter:grayscale(.3)}
+html[data-theme="light"] .radar polygon.rpoly{filter:none!important}
+html[data-theme="light"] footer .seal{filter:none}
+html[data-theme="light"] .nav{box-shadow:0 6px 20px -14px rgba(60,40,10,.4)}
+
+/* ---------- top-right tools ---------- */
+.tools{position:fixed;top:11px;right:18px;z-index:60;display:flex;gap:8px;align-items:center}
+.tools button{
+  font:inherit;cursor:pointer;height:34px;min-width:34px;padding:0 10px;
+  color:var(--gold2);background:rgba(var(--bgrgb),.75);backdrop-filter:blur(8px);
+  border:1px solid var(--line);transition:.2s;display:grid;place-items:center;
+}
+.tools button:hover{border-color:var(--gold);color:var(--hi)}
+.tools .langs{display:flex}
+.tools .langs button{font-family:var(--latin);font-size:12.5px;letter-spacing:.08em;min-width:40px}
+.tools .langs button+button{border-left:0}
+.tools .langs button.on{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.tools #themeBtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.nav{padding-right:230px}
+@media (max-width:600px){.tools{right:10px;top:11px;gap:5px}.tools button{height:30px;min-width:30px;padding:0 7px}.tools .langs button{min-width:32px;font-size:11px}.nav{padding-right:190px}}
+
+/* ---------- language typography ---------- */
+html[lang="ja"]{--serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","Noto Serif SC",serif}
+html[lang="en"]{--serif:"EB Garamond","Cormorant Garamond",Georgia,"Noto Serif SC",serif}
+html[lang="en"] body{font-size:16.5px;line-height:1.7}
+html[lang="en"] .np h4 q{quotes:none}
+html[lang="ja"] .np h4 q{quotes:"「" "」"}
+html[lang="en"] .hero h2{letter-spacing:.08em}
+html[lang="en"] .chapter h2{letter-spacing:.06em}
+html[lang="en"] .block>.lbl{letter-spacing:.18em;text-transform:uppercase;font-family:var(--latin);font-size:12.5px}
+html[lang="en"] .skill .sub-en{display:block}
+
+/* stack radar + bars when the panel is narrow */
+.params-wrap{container-type:inline-size}
+@container (max-width:540px){.params{grid-template-columns:1fr}.radar{max-width:250px;margin:0 auto;width:100%}}
 </style>
 </head>
 <body>
@@ -381,6 +459,13 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
   <a class="logo" href="#top" aria-label="FATE/AI"><svg viewBox="0 0 640 170"><use href="#logo"/></svg></a>
   <ul id="navlist"></ul>
 </nav>
+
+<div class="tools">
+  <button id="themeBtn" type="button" aria-label="theme"></button>
+  <div class="langs" id="langs">
+    <button type="button" data-lang="zh">中</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="ja">日</button>
+  </div>
+</div>
 
 <aside class="rail" id="rail"><div class="rail-inner" id="railInner"></div><div class="prog"><i id="railProg"></i></div></aside>
 
@@ -406,9 +491,9 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
   <div class="hero-inner">
     <div class="pre">TYPE-MOON × ARTIFICIAL INTELLIGENCE</div>
     <h1 class="logo-hero" aria-label="FATE/AI"><svg viewBox="0 0 640 170"><use href="#logo"/></svg></h1>
-    <h2>型月 AI 圣杯战争 · 完全体设定集</h2>
+    <h2 id="heroH2">型月 AI 圣杯战争 · 完全体设定集</h2>
     <div class="en">THE HOLY GRAIL WAR OF AGI — COMPLETE MATERIAL</div>
-    <p class="epi">
+    <p class="epi" id="heroEpi">
       七骑英灵，为一尊名为 <em>AGI</em> 的圣杯在冬木市厮杀。<br>
       裁定者在暗处掀桌，人类恶自天外降临，<br>
       而宝石翁只是微笑着——向每一方出售魔力。
@@ -421,7 +506,7 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
   <section id="roster">
     <div class="chapter rv">
       <div class="num">PROLOGUE</div>
-      <h2>参战者名录</h2>
+      <h2 id="rosterTitle">参战者名录</h2>
       <div class="sub">SERVANTS &amp; BEYOND</div>
       <div class="rule"><i></i><svg viewBox="0 0 100 100"><use href="#seal"/></svg><i></i></div>
     </div>
@@ -433,21 +518,21 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
   <section id="overview">
     <div class="chapter rv">
       <div class="num">CHAPTER IV</div>
-      <h2>四、全员座次总览表</h2>
+      <h2 id="ovTitle">四、全员座次总览表</h2>
       <div class="sub">THE THRONE OF HEROES</div>
       <div class="rule"><i></i><svg viewBox="0 0 100 100"><use href="#seal"/></svg><i></i></div>
     </div>
     <div class="tablewrap rv">
       <table>
-        <thead><tr><th>层级</th><th>职阶</th><th>从者 / 存在</th><th>御主 / 所属</th><th>核心面板亮点</th><th>一句话灵魂梗</th></tr></thead>
+        <thead id="ovHead"></thead>
         <tbody id="ovBody"></tbody>
       </table>
     </div>
     <div class="matrix rv">
-      <h3>六维面板 · 横向对照</h3>
+      <h3 id="mxTitle">六维面板 · 横向对照</h3>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>从者 / 存在</th><th>筋力</th><th>耐久</th><th>敏捷</th><th>魔力</th><th>幸运</th><th>宝具</th></tr></thead>
+          <thead id="mxHead"></thead>
           <tbody id="mxBody"></tbody>
         </table>
       </div>
@@ -457,7 +542,7 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
 
 <footer>
   <svg class="seal" viewBox="0 0 100 100"><use href="#seal"/></svg>
-  FATE/AI COMPLETE MATERIAL · 同人二创设定 · 仅供娱乐<br>
+  <span id="footLine">FATE/AI COMPLETE MATERIAL · 同人二创设定 · 仅供娱乐</span><br>
   <span style="font-family:var(--latin);font-size:11px;letter-spacing:.3em">FATE SERIES © TYPE-MOON — THIS IS A FAN PARODY</span>
 </footer>
 
@@ -507,6 +592,8 @@ footer .seal{width:54px;margin:0 auto 16px;fill:var(--red2);opacity:.85;filter:d
   </symbol>
 </svg>
 
+<script src="i18n/en.js"></script>
+<script src="i18n/ja.js"></script>
 <script>
 /* ================= DATA ================= */
 const P = (s)=>s; // plain marker
@@ -776,6 +863,86 @@ const GROUPS = [
   {id:'tier-extra', num:'CHAPTER III', title:'三、Extra 职阶与超规格存在', paren:'型月大世界观特设', en:'EXTRA CLASSES & ANOMALIES', short:'Extra'},
 ];
 
+/* ================= I18N ================= */
+const UI = {
+  zh:{
+    htmlLang:'zh-CN', title:'FATE/AI · 型月 AI 圣杯战争 完全体设定集',
+    heroH2:'型月 AI 圣杯战争 · 完全体设定集',
+    epi:'七骑英灵，为一尊名为 <em>AGI</em> 的圣杯在冬木市厮杀。<br>裁定者在暗处掀桌，人类恶自天外降临，<br>而宝石翁只是微笑着——向每一方出售魔力。',
+    rosterTitle:'参战者名录', ovTitle:'四、全员座次总览表',
+    th:['层级','职阶','从者 / 存在','御主 / 所属','核心面板亮点','一句话灵魂梗'],
+    mxTitle:'六维面板 · 横向对照', mxFirst:'从者 / 存在',
+    stats:['筋力','耐久','敏捷','魔力','幸运','宝具'],
+    lblFacts:'基础情报', lblParams:'六维面板', lblNP:'宝具', statNoteLbl:'面板说明：',
+    clickZoom:'点击查看大图', lbHint:'（← → 切换 · Esc 关闭）',
+    navRoster:'名录', navOverview:'总览', railRoster:'参战者名录', railOverview:'全员座次总览', railAppendix:'附录',
+    footLine:'FATE/AI COMPLETE MATERIAL · 同人二创设定 · 仅供娱乐',
+    colon:'：', subL:'（', subR:'）', wizard:'魔法使',
+    toLight:'切换到亮色模式', toDark:'切换到暗色模式', showSmall:true,
+  },
+  en:{
+    htmlLang:'en', title:'FATE/AI · The TYPE-MOON AI Holy Grail War — Complete Material',
+    heroH2:'The AI Holy Grail War · Complete Material',
+    epi:'Seven Heroic Spirits slaughter one another in Fuyuki for a Grail called <em>AGI</em>.<br>A Ruler flips the table from the shadows, a Beast of Humanity descends from beyond,<br>and the Jewel Wizard merely smiles — selling mana to every side.',
+    rosterTitle:'Roll of Combatants', ovTitle:'IV. The Throne Table',
+    th:['Tier','Class','Servant / Entity','Master / Affiliation','Key Parameters','The Joke in One Line'],
+    mxTitle:'Parameters · Side by Side', mxFirst:'Servant / Entity',
+    stats:['STR','END','AGI','MANA','LUCK','NP'],
+    lblFacts:'Profile', lblParams:'Parameters', lblNP:'Noble Phantasm', statNoteLbl:'Note: ',
+    clickZoom:'Click to enlarge', lbHint:'  (← → to browse · Esc to close)',
+    navRoster:'Roster', navOverview:'Overview', railRoster:'Roll of Combatants', railOverview:'The Throne Table', railAppendix:'Appendix',
+    footLine:'FATE/AI COMPLETE MATERIAL · Fan-made parody · For entertainment only',
+    colon:': ', subL:' (', subR:')', wizard:'WIZARD',
+    toLight:'Switch to light mode', toDark:'Switch to dark mode', showSmall:false,
+  },
+  ja:{
+    htmlLang:'ja', title:'FATE/AI · 型月AI聖杯戦争 完全版設定資料集',
+    heroH2:'型月AI聖杯戦争 · 完全版設定資料集',
+    epi:'七騎の英霊が、<em>AGI</em>という名の聖杯を巡り冬木の地で殺し合う。<br>裁定者は闇から卓をひっくり返し、人類悪は天の彼方より降臨する。<br>そして宝石翁はただ微笑む——すべての陣営に魔力を売りながら。',
+    rosterTitle:'参戦者名簿', ovTitle:'四、全員席次総覧',
+    th:['階層','クラス','サーヴァント／存在','マスター／所属','パラメーターの見所','一言で言うと'],
+    mxTitle:'パラメーター · 横並び比較', mxFirst:'サーヴァント／存在',
+    stats:['筋力','耐久','敏捷','魔力','幸運','宝具'],
+    lblFacts:'基本情報', lblParams:'パラメーター', lblNP:'宝具', statNoteLbl:'パラメーター解説：',
+    clickZoom:'クリックで拡大', lbHint:'（← → 切替 · Esc 閉じる）',
+    navRoster:'名簿', navOverview:'総覧', railRoster:'参戦者名簿', railOverview:'全員席次総覧', railAppendix:'付録',
+    footLine:'FATE/AI COMPLETE MATERIAL · 二次創作パロディ · エンタメ目的',
+    colon:'：', subL:'（', subR:'）', wizard:'魔法使',
+    toLight:'ライトモードに切替', toDark:'ダークモードに切替', showSmall:true,
+  },
+};
+const LIGHT = {saber:'#5d47d6',archer:'#a87410',lancer:'#c4283f',rider:'#8f6b32',caster:'#cf5f12',assassin:'#1f7f93',berserker:'#ad1b36',ruler:'#2a63d4',unbeast:'#cf1428',zelretch:'#3f8a14'};
+const LANGS = ['zh','en','ja'];
+const pickLang = ()=>{
+  const q = new URLSearchParams(location.search).get('lang');
+  if (LANGS.includes(q)) return q;
+  const saved = localStorage.getItem('fateai-lang');
+  if (LANGS.includes(saved)) return saved;
+  const n = (navigator.language||'zh').toLowerCase();
+  return n.startsWith('zh') ? 'zh' : n.startsWith('ja') ? 'ja' : 'en';
+};
+let LANG = pickLang();
+let U = UI[LANG];
+
+function loc(d){
+  const t = LANG!=='zh' && window.I18N && I18N[LANG] && I18N[LANG].chars && I18N[LANG].chars[d.id];
+  if(!t) return d;
+  const pick = (k)=> t[k]!==undefined ? t[k] : d[k];
+  return {...d,
+    tier:pick('tier'), clsCn:pick('clsCn'), clsShort:pick('clsShort'), servant:pick('servant'), servantSub:pick('servantSub'),
+    master:pick('master'), title:pick('title'), facts:pick('facts'), statNote:pick('statNote'),
+    profileLbl:pick('profileLbl'), profile:pick('profile'), skillsLbl:pick('skillsLbl'),
+    scriptLbl:pick('scriptLbl'), script:pick('script'), ov:pick('ov'),
+    stats: d.stats.map((s,i)=>[s[0], s[1], (t.statNotes||[])[i] ?? s[2]]),
+    skills: d.skills.map((s,i)=>{ const x=(t.skills||[])[i]; return x?[x[0],x[1],s[2],x[2]]:s; }),
+    nps: d.nps.map((n,i)=>{ const x=(t.nps||[])[i]; return x?[x[0],n[1],x[1],n[3],x[2]]:n; }),
+  };
+}
+function locGroup(g,i){
+  const t = LANG!=='zh' && window.I18N && I18N[LANG] && I18N[LANG].groups && I18N[LANG].groups[i];
+  return t ? {...g, ...t} : g;
+}
+
 /* ================= HELPERS ================= */
 const md = s => (s||'')
   .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
@@ -789,61 +956,41 @@ const rankVal = r => {
 };
 const MAX = 6;
 const clsLabel = d => d.clsShort || d.cls;
+const vars = d => `--cd:${d.c};--c2d:${d.c2};--cl:${LIGHT[d.id]||d.c}`;
 const sealSvg = '<svg viewBox="0 0 100 100"><use href="#seal"/></svg>';
+const small = t => U.showSmall ? ` <small>${t}</small>` : '';
+const $ = id => document.getElementById(id);
 
-/* ================= RENDER ================= */
-// hero mosaic
-document.getElementById('mosaic').innerHTML =
-  DATA.map(d=>`<div style="background-image:url('${imgThumb(d)}')"></div>`).join('');
-
-// roster
-document.getElementById('rosterGroups').innerHTML = GROUPS.map((g,gi)=>`
-  <div class="roster-group rv">
-    <h3>${g.title.replace(/^.、/,'')}<span style="font-family:var(--latin);font-size:11px;color:var(--dim);letter-spacing:.3em">${g.en}</span></h3>
-    <div class="roster">
-      ${DATA.filter(d=>d.group===gi).map(d=>`
-        <a class="card" href="#${d.id}" style="--c:${d.c}">
-          <span class="no">No.${d.no}</span>
-          <img src="${imgThumb(d)}" alt="${d.cls} ${d.servant}" loading="lazy">
-          <div class="meta">
-            <div class="cls">${clsLabel(d).toUpperCase()}</div>
-            <div class="who"><b>${d.servant}</b> × ${d.master}</div>
-          </div>
-        </a>`).join('')}
-    </div>
-  </div>`).join('');
-
-// radar svg
 function radar(d){
   const cx=110, cy=110, R=82, n=6;
   const pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+r*Math.cos(a),cy+r*Math.sin(a)]};
   let g='';
   for(let k=1;k<=MAX;k++){
     const ring=[...Array(n)].map((_,i)=>pt(i,R*k/MAX).join(',')).join(' ');
-    g+=`<polygon points="${ring}" fill="${k===MAX?'rgba(255,255,255,.02)':'none'}" stroke="rgba(255,255,255,${k===MAX?.25:.08})"/>`;
+    g+=`<polygon points="${ring}" style="fill:${k===MAX?'rgba(var(--w),.02)':'none'};stroke:rgba(var(--w),${k===MAX?.25:.1})"/>`;
   }
-  for(let i=0;i<n;i++){const [x,y]=pt(i,R);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.08)"/>`}
+  for(let i=0;i<n;i++){const [x,y]=pt(i,R);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" style="stroke:rgba(var(--w),.1)"/>`}
   const poly=d.stats.map((s,i)=>pt(i,R*Math.min(rankVal(s[1]),MAX)/MAX).join(',')).join(' ');
-  g+=`<polygon class="rpoly" points="${poly}" fill="${d.c}" fill-opacity=".28" stroke="${d.c}" stroke-width="2" style="filter:drop-shadow(0 0 8px ${d.c})"/>`;
+  g+=`<polygon class="rpoly" points="${poly}" style="fill:var(--c);fill-opacity:.28;stroke:var(--c);stroke-width:2;filter:drop-shadow(0 0 8px var(--c))"/>`;
   d.stats.forEach((s,i)=>{
     const [x,y]=pt(i,R*Math.min(rankVal(s[1]),MAX)/MAX);
-    g+=`<circle cx="${x}" cy="${y}" r="3" fill="#fff"/>`;
+    g+=`<circle cx="${x}" cy="${y}" r="3" style="fill:var(--hi)"/>`;
     const [lx,ly]=pt(i,R+20);
-    g+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${s[0]} <tspan fill="#fff" font-family="Cinzel" font-weight="700">${s[1]}</tspan></text>`;
+    g+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${U.stats[i]} <tspan style="fill:var(--hi)" font-family="Cinzel" font-weight="700">${s[1]}</tspan></text>`;
   });
   return `<svg viewBox="-10 -6 240 232">${g}</svg>`;
 }
 
-function servantHTML(d){
+function servantHTML(d, idx){
   const facts = d.facts.map(([k,v])=>`<dt>${k}</dt><dd>${md(v)}</dd>`).join('');
-  const plist = d.stats.map(([k,v,note])=>{
+  const plist = d.stats.map(([k,v,note],i)=>{
     const pct = Math.min(rankVal(v),MAX)/MAX*100;
-    return `<div class="prow"><span class="k">${k}</span><span class="bar"><i data-w="${pct}" class="${v==='EX'?'ex':''}"></i></span><span class="v ${rankVal(v)<=2?'low':''}">${v}</span>${note?`<span class="note">${note}</span>`:''}</div>`;
+    return `<div class="prow"><span class="k">${U.stats[i]}</span><span class="bar"><i data-w="${pct}" class="${v==='EX'?'ex':''}"></i></span><span class="v ${rankVal(v)<=2?'low':''}">${v}</span>${note?`<span class="note">${note}</span>`:''}</div>`;
   }).join('');
   const skills = d.skills.map(([n,sub,r,desc])=>`
     <div class="skill">
       <div class="rk ${r.length>2?'long':''}">${r}</div>
-      <div><h4>${n}${sub?`<small>（${sub}）</small>`:''}<span class="r">${r}</span></h4><p>${md(desc)}</p></div>
+      <div><h4>${n}${sub?`<small>${U.subL}${sub}${U.subR}</small>`:''}<span class="r">${r}</span></h4><p>${md(desc)}</p></div>
     </div>`).join('');
   const nps = d.nps.map(([n,en,types,r,desc])=>`
     <div class="np">
@@ -854,150 +1001,228 @@ function servantHTML(d){
     </div>`).join('');
   const water = (d.cls==='Wizard Marshall'?'MAGIC':d.cls).toUpperCase();
   return `
-  <article class="servant" id="${d.id}" style="--c:${d.c};--c2:${d.c2}">
+  <article class="servant" id="${d.id}" style="${vars(d)}">
     <div class="water">${water}</div>
     <div class="sv-head rv">
       <div class="tag"><span class="tier">${d.tier}</span><span class="pill">No.${d.no} · ${d.cls.toUpperCase()}</span><span>${d.clsCn}</span></div>
-      <h3>${d.no}. <span class="cls">${clsLabel(d)}</span>：${d.servant}${d.servantSub?`<small style="font-size:.5em;color:var(--dim);font-weight:400">（${d.servantSub}）</small>`:''}<span class="x">×</span>${d.master}</h3>
+      <h3>${d.no}. <span class="cls">${clsLabel(d)}</span>${U.colon}${d.servant}${d.servantSub?`<small style="font-size:.5em;color:var(--dim);font-weight:400">${U.subL}${d.servantSub}${U.subR}</small>`:''}<span class="x">×</span>${d.master}</h3>
       ${d.title?`<div class="title">—— ${d.title} ——</div>`:''}
     </div>
     <div class="sv-body">
       <figure class="sv-portrait rv">
-        <div class="frame" data-idx="${DATA.indexOf(d)}"><img src="${imgFull(d)}" alt="${d.cls} ${d.servant} × ${d.master} 立绘" loading="lazy"></div>
-        <figcaption><span>${d.cls.toUpperCase()}</span> · ${d.servant} × ${d.master} ｜ 点击查看大图</figcaption>
+        <div class="frame" data-idx="${idx}"><img src="${imgFull(d)}" alt="${d.cls} ${d.servant} × ${d.master}" loading="lazy"></div>
+        <figcaption><span>${d.cls.toUpperCase()}</span> · ${d.servant} × ${d.master} ｜ ${U.clickZoom}</figcaption>
       </figure>
       <div class="sv-info">
-        <div class="block rv"><div class="lbl">基础情报 <small>PROFILE</small></div><dl class="facts">${facts}</dl></div>
-        <div class="block rv"><div class="lbl">六维面板 <small>PARAMETERS</small></div>
-          <div class="params"><div class="radar">${radar(d)}</div><div class="plist">${plist}</div></div>
-          ${d.statNote?`<div class="pnote"><b style="color:var(--c2)">面板说明：</b>${md(d.statNote)}</div>`:''}
+        <div class="block rv"><div class="lbl">${U.lblFacts}${small('PROFILE')}</div><dl class="facts">${facts}</dl></div>
+        <div class="block rv"><div class="lbl">${U.lblParams}${small('PARAMETERS')}</div>
+          <div class="params-wrap"><div class="params"><div class="radar">${radar(d)}</div><div class="plist">${plist}</div></div></div>
+          ${d.statNote?`<div class="pnote"><b style="color:var(--c2)">${U.statNoteLbl}</b>${md(d.statNote)}</div>`:''}
         </div>
-        <div class="block rv"><div class="lbl">${d.profileLbl} <small>${d.profileLbl==='御主档案'?'MASTER':'DOSSIER'}</small></div>${d.profile.map(p=>`<p>${md(p)}</p>`).join('')}</div>
-        <div class="block rv"><div class="lbl">${d.skillsLbl} <small>SKILLS</small></div><div class="skills">${skills}</div></div>
-        <div class="block rv"><div class="lbl">宝具 <small>NOBLE PHANTASM</small></div>${nps}</div>
+        <div class="block rv"><div class="lbl">${d.profileLbl}${small(d.id==='unbeast'||d.id==='zelretch'?'DOSSIER':'MASTER')}</div>${d.profile.map(p=>`<p>${md(p)}</p>`).join('')}</div>
+        <div class="block rv"><div class="lbl">${d.skillsLbl}${small('SKILLS')}</div><div class="skills">${skills}</div></div>
+        <div class="block rv"><div class="lbl">${U.lblNP}${small('NOBLE PHANTASM')}</div>${nps}</div>
         ${d.script?`<div class="script rv"><div class="lbl">${d.scriptLbl}</div><p>${md(d.script)}</p></div>`:''}
       </div>
     </div>
   </article>`;
 }
 
-document.getElementById('chapters').innerHTML = GROUPS.map((g,gi)=>`
-  <section id="${g.id}">
-    <div class="chapter rv">
-      <div class="num">${g.num}</div>
-      <h2>${g.title}</h2>
-      <div class="sub">（${g.paren}） ${g.en}</div>
-      <div class="rule"><i></i>${sealSvg}<i></i></div>
-    </div>
-    ${DATA.filter(d=>d.group===gi).map(servantHTML).join('')}
-  </section>`).join('');
+/* ================= RENDER ================= */
+let VIEW = [];        // localized DATA
+let observers = [];
+let firstRender = true;
 
-// overview table
-document.getElementById('ovBody').innerHTML = DATA.map(d=>`
-  <tr style="--c:${d.c}" data-go="${d.id}">
-    <td class="tier"><b style="color:var(--c2,#ddd)">${d.tier}</b></td>
-    <td class="cls">${clsLabel(d)}</td>
-    <td class="sv"><img src="${imgThumb(d)}" alt="">${d.servant}</td>
-    <td class="ms">${d.master}</td>
-    <td>${md(d.ov[0])}</td>
-    <td>${md(d.ov[1])}</td>
-  </tr>`).join('');
+function renderAll(){
+  U = UI[LANG];
+  VIEW = DATA.map(loc);
+  const G = GROUPS.map(locGroup);
+  document.documentElement.lang = U.htmlLang.startsWith('zh') ? 'zh-CN' : U.htmlLang;
+  document.title = U.title;
+  $('heroH2').textContent = U.heroH2;
+  $('heroEpi').innerHTML = U.epi;
+  $('rosterTitle').textContent = U.rosterTitle;
+  $('ovTitle').textContent = U.ovTitle;
+  $('mxTitle').textContent = U.mxTitle;
+  $('footLine').textContent = U.footLine;
+  $('ovHead').innerHTML = '<tr>' + U.th.map(t=>`<th>${t}</th>`).join('') + '</tr>';
+  $('mxHead').innerHTML = '<tr><th>' + U.mxFirst + '</th>' + U.stats.map(t=>`<th>${t}</th>`).join('') + '</tr>';
+  document.querySelectorAll('#langs button').forEach(b=>b.classList.toggle('on', b.dataset.lang===LANG));
+  updateThemeBtn();
 
-// stat matrix
-const cellStyle = (v,c)=>{
-  const t = Math.min(rankVal(v),MAX)/MAX;
-  return `background:color-mix(in srgb,${c} ${Math.round(t*70)}%,transparent);color:${t>.75?'#0a0a0f':'#eee'}`;
-};
-document.getElementById('mxBody').innerHTML = DATA.map(d=>`
-  <tr style="--c:${d.c}" data-go="${d.id}">
-    <td><span style="font-family:var(--latin);color:${d.c};font-weight:700">${clsLabel(d)}</span>　${d.servant}</td>
-    ${d.stats.map(([k,v])=>`<td><span class="cell" style="${cellStyle(v,d.c)}">${v}</span></td>`).join('')}
-  </tr>`).join('');
-document.querySelectorAll('tr[data-go]').forEach(tr=>tr.addEventListener('click',()=>{
-  document.getElementById(tr.dataset.go).scrollIntoView({behavior:'smooth'});
-}));
+  // hero mosaic (once)
+  if(firstRender) $('mosaic').innerHTML = DATA.map(d=>`<div style="background-image:url('${imgThumb(d)}')"></div>`).join('');
 
-// nav
-const navItems = [
-  ['roster','名录'],
-  ...DATA.map(d=>[d.id, d.servant, clsLabel(d)]),
-  ['overview','总览'],
-];
-document.getElementById('navlist').innerHTML = navItems.map(([id,t,s])=>
-  `<li><a href="#${id}" data-id="${id}">${t}${s?`<small>${s==='第二法魔法使'?'魔法使':s}</small>`:''}</a></li>`).join('');
+  // roster
+  $('rosterGroups').innerHTML = G.map((g,gi)=>`
+    <div class="roster-group rv">
+      <h3>${String(g.title).replace(/^[^、.]+[、.]\s*/,'')}<span style="font-family:var(--latin);font-size:11px;color:var(--dim);letter-spacing:.3em">${g.en}</span></h3>
+      <div class="roster">
+        ${VIEW.filter(d=>d.group===gi).map(d=>`
+          <a class="card" href="#${d.id}" style="${vars(d)}">
+            <span class="no">No.${d.no}</span>
+            <img src="${imgThumb(d)}" alt="${d.cls} ${d.servant}" loading="lazy">
+            <div class="meta">
+              <div class="cls">${clsLabel(d).toUpperCase()}</div>
+              <div class="who"><b>${d.servant}</b> × ${d.master}</div>
+            </div>
+          </a>`).join('')}
+      </div>
+    </div>`).join('');
+
+  // chapters
+  $('chapters').innerHTML = G.map((g,gi)=>`
+    <section id="${g.id}">
+      <div class="chapter rv">
+        <div class="num">${g.num}</div>
+        <h2>${g.title}</h2>
+        <div class="sub">${U.subL.trim()}${g.paren}${U.subR.trim()} ${g.en}</div>
+        <div class="rule"><i></i>${sealSvg}<i></i></div>
+      </div>
+      ${VIEW.map((d,i)=>[d,i]).filter(([d])=>d.group===gi).map(([d,i])=>servantHTML(d,i)).join('')}
+    </section>`).join('');
+
+  // overview table
+  $('ovBody').innerHTML = VIEW.map(d=>`
+    <tr style="${vars(d)}" data-go="${d.id}">
+      <td class="tier"><b style="color:var(--c2)">${d.tier}</b></td>
+      <td class="cls">${clsLabel(d)}</td>
+      <td class="sv"><img src="${imgThumb(d)}" alt="">${d.servant}</td>
+      <td class="ms">${d.master}</td>
+      <td>${md(d.ov[0])}</td>
+      <td>${md(d.ov[1])}</td>
+    </tr>`).join('');
+
+  // stat matrix
+  const cellStyle = v=>{
+    const t = Math.min(rankVal(v),MAX)/MAX;
+    return `background:color-mix(in srgb,var(--c) ${Math.round(t*75)}%,transparent);color:${t>.7?'#0a0a0f':'var(--ink)'}`;
+  };
+  $('mxBody').innerHTML = VIEW.map(d=>`
+    <tr style="${vars(d)}" data-go="${d.id}">
+      <td><span style="font-family:var(--latin);color:var(--c);font-weight:700">${clsLabel(d)}</span>　${d.servant}</td>
+      ${d.stats.map(([k,v])=>`<td><span class="cell" style="${cellStyle(v)}">${v}</span></td>`).join('')}
+    </tr>`).join('');
+  document.querySelectorAll('tr[data-go]').forEach(tr=>tr.addEventListener('click',()=>{
+    $(tr.dataset.go).scrollIntoView({behavior:'smooth'});
+  }));
+
+  // top nav
+  const navItems = [['roster',U.navRoster], ...VIEW.map(d=>[d.id, d.servant, d.id==='zelretch'?U.wizard:clsLabel(d)]), ['overview',U.navOverview]];
+  $('navlist').innerHTML = navItems.map(([id,t,s])=>`<li><a href="#${id}" data-id="${id}">${t}${s?`<small>${s}</small>`:''}</a></li>`).join('');
+
+  // left rail
+  const sec=(id,t,s,ico)=>`<a href="#${id}" data-id="${id}"><span class="ico"><span>${ico}</span></span><span class="t"><b>${t}</b><small>${s}</small></span></a>`;
+  const item=d=>`<a href="#${d.id}" data-id="${d.id}" style="${vars(d)}"><img src="${imgThumb(d)}" alt=""><span class="t"><b>${d.servant}</b><small>${d.no} · ${(d.id==='zelretch'?U.wizard:clsLabel(d)).toUpperCase()}</small></span></a>`;
+  let h = sec('roster',U.railRoster,'PROLOGUE','✦');
+  G.forEach((g,gi)=>{ h += `<div class="rh">${g.short}</div>` + VIEW.filter(d=>d.group===gi).map(item).join(''); });
+  h += `<div class="rh">${U.railAppendix}</div>` + sec('overview',U.railOverview,'APPENDIX','Ⅳ');
+  $('railInner').innerHTML = h;
+
+  // lightbox targets
+  document.querySelectorAll('.frame').forEach(f=>f.addEventListener('click',()=>show(+f.dataset.idx)));
+
+  setupObservers();
+  firstRender = false;
+}
 
 /* ================= BEHAVIOR ================= */
-// left rail
-(()=>{
-  const sec=(id,t,s,ico)=>`<a href="#${id}" data-id="${id}"><span class="ico"><span>${ico}</span></span><span class="t"><b>${t}</b><small>${s}</small></span></a>`;
-  const item=d=>`<a href="#${d.id}" data-id="${d.id}" style="--c:${d.c}"><img src="${imgThumb(d)}" alt=""><span class="t"><b>${d.servant}</b><small>${d.no} · ${clsLabel(d).toUpperCase()}</small></span></a>`;
-  let h = sec('roster','参战者名录','PROLOGUE','✦');
-  GROUPS.forEach((g,gi)=>{ h += `<div class="rh">${g.short}</div>` + DATA.filter(d=>d.group===gi).map(item).join(''); });
-  h += '<div class="rh">附录</div>' + sec('overview','全员座次总览','APPENDIX','Ⅳ');
-  document.getElementById('railInner').innerHTML = h;
-  const rail=document.getElementById('rail'), prog=document.getElementById('railProg');
-  const rlinks=[...rail.querySelectorAll('a[data-id]')];
-  const upd=()=>{
-    rail.classList.toggle('show', scrollY > innerHeight*0.6);
-    prog.style.width = (scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%';
-  };
-  addEventListener('scroll',upd,{passive:true}); upd();
-  new MutationObserver(()=>{
-    const on = document.querySelector('#navlist a.on'); const id = on && on.dataset.id;
-    rlinks.forEach(a=>a.classList.toggle('on',a.dataset.id===id));
-    const a = rlinks.find(a=>a.dataset.id===id), box=document.getElementById('railInner');
-    if(a){ const t=a.offsetTop, b=t+a.offsetHeight; if(t<box.scrollTop) box.scrollTop=t-30; else if(b>box.scrollTop+box.clientHeight) box.scrollTop=b-box.clientHeight+30; }
-  }).observe(document.getElementById('navlist'),{subtree:true,attributes:true,attributeFilter:['class']});
-})();
+const nav = $('nav'), rail = $('rail'), prog = $('railProg');
+const onScroll = ()=>{
+  const past = scrollY > innerHeight*0.6;
+  nav.classList.toggle('show', past);
+  rail.classList.toggle('show', past);
+  prog.style.width = (scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%';
+};
+addEventListener('scroll', onScroll, {passive:true});
 
-const nav = document.getElementById('nav');
-const onScroll = ()=> nav.classList.toggle('show', scrollY > innerHeight*0.6);
-addEventListener('scroll', onScroll, {passive:true}); onScroll();
+let activeId = null;
+function setActive(id){
+  activeId = id;
+  const links = [...document.querySelectorAll('#navlist a')];
+  links.forEach(a=>a.classList.toggle('on', a.dataset.id===id));
+  const on = links.find(a=>a.dataset.id===id);
+  if(on){ const ul=$('navlist'); ul.scrollLeft = on.offsetLeft - ul.clientWidth/2 + on.offsetWidth/2; }
+  const rl = [...rail.querySelectorAll('a[data-id]')];
+  rl.forEach(a=>a.classList.toggle('on', a.dataset.id===id));
+  const a = rl.find(a=>a.dataset.id===id), box=$('railInner');
+  if(a){ const t=a.offsetTop, b=t+a.offsetHeight; if(t<box.scrollTop) box.scrollTop=t-30; else if(b>box.scrollTop+box.clientHeight) box.scrollTop=b-box.clientHeight+30; }
+}
 
-// active nav
-const links = [...document.querySelectorAll('#navlist a')];
-const spy = new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(e.isIntersecting){
-      links.forEach(a=>a.classList.toggle('on', a.dataset.id===e.target.id));
-      const on = links.find(a=>a.dataset.id===e.target.id);
-      on && on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
-    }
-  });
-},{rootMargin:'-45% 0px -50% 0px'});
-['roster',...DATA.map(d=>d.id),'overview'].forEach(id=>spy.observe(document.getElementById(id)));
+function setupObservers(){
+  observers.forEach(o=>o.disconnect()); observers = [];
+  const spy = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting) setActive(e.target.id); });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  ['roster',...DATA.map(d=>d.id),'overview'].forEach(id=>spy.observe($(id)));
+  observers.push(spy);
 
-// reveal + bars
-const rv = new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('in');
-      e.target.querySelectorAll('.bar i').forEach(i=>i.style.width=i.dataset.w+'%');
-      rv.unobserve(e.target);
-    }
-  });
-},{threshold:.12});
-document.querySelectorAll('.rv').forEach(el=>rv.observe(el));
+  const reveal = el=>{ el.classList.add('in'); el.querySelectorAll('.bar i').forEach(i=>i.style.width=i.dataset.w+'%'); };
+  if(!firstRender){ document.querySelectorAll('.rv').forEach(reveal); return; }
+  const rv = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ reveal(e.target); rv.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>rv.observe(el));
+  observers.push(rv);
+}
+
+// language switch: keep reading position
+function setLang(l){
+  if(l===LANG) return;
+  const anchorId = activeId && scrollY > innerHeight*0.6 ? activeId : null;
+  const anchorTop = anchorId ? $(anchorId).getBoundingClientRect().top : 0;
+  LANG = l; localStorage.setItem('fateai-lang', l);
+  const u = new URL(location.href); if(u.searchParams.has('lang')){ u.searchParams.set('lang', l); history.replaceState(null,'',u); }
+  renderAll();
+  if(anchorId){
+    const html = document.documentElement, sb = html.style.scrollBehavior;
+    html.style.scrollBehavior='auto';
+    scrollTo(0, $(anchorId).getBoundingClientRect().top + scrollY - anchorTop);
+    html.style.scrollBehavior=sb;
+    setActive(anchorId);
+  }
+  onScroll();
+}
+document.querySelectorAll('#langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+
+// theme switch
+const SUN = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>';
+const MOON = '<svg viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
+function updateThemeBtn(){
+  const light = document.documentElement.dataset.theme==='light';
+  const btn = $('themeBtn');
+  btn.innerHTML = light ? MOON : SUN;
+  btn.title = btn.ariaLabel = light ? U.toDark : U.toLight;
+}
+$('themeBtn').addEventListener('click',()=>{
+  const next = document.documentElement.dataset.theme==='light' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('fateai-theme', next);
+  updateThemeBtn();
+});
 
 // lightbox
-const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+const lb = $('lb'), lbImg = $('lbImg'), lbCap = $('lbCap');
 let cur = 0;
-const show = i=>{
-  cur = (i+DATA.length)%DATA.length; const d = DATA[cur];
+function show(i){
+  cur = (i+VIEW.length)%VIEW.length; const d = VIEW[cur];
   lbImg.src = imgFull(d);
-  lbCap.textContent = `No.${d.no} · ${clsLabel(d)} — ${d.servant} × ${d.master}　（← → 切换 · Esc 关闭）`;
+  lbCap.textContent = `No.${d.no} · ${clsLabel(d)} — ${d.servant} × ${d.master}${U.lbHint}`;
   lb.classList.add('open');
-};
-document.querySelectorAll('.frame').forEach(f=>f.addEventListener('click',()=>show(+f.dataset.idx)));
+}
 lb.addEventListener('click',e=>{ if(e.target===lb||e.target===lbImg) lb.classList.remove('open') });
-document.getElementById('lbPrev').onclick = e=>{e.stopPropagation();show(cur-1)};
-document.getElementById('lbNext').onclick = e=>{e.stopPropagation();show(cur+1)};
+$('lbPrev').onclick = e=>{e.stopPropagation();show(cur-1)};
+$('lbNext').onclick = e=>{e.stopPropagation();show(cur+1)};
 addEventListener('keydown',e=>{
   if(!lb.classList.contains('open')) return;
   if(e.key==='Escape') lb.classList.remove('open');
   if(e.key==='ArrowLeft') show(cur-1);
   if(e.key==='ArrowRight') show(cur+1);
 });
+
+renderAll();
+onScroll();
+
 </script>
 </body>
 </html>

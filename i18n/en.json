@@ -573,9 +573,8 @@
   "unbeast": {
    "tier": "Calamity",
    "clsCn": "Beast VII · Evil of Humanity",
-   "servant": "Donald John Trump",
+   "servant": "Donald Trump",
    "master": "MAGA / The White House",
-   "servantSub": "a.k.a. “The Donald”",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -639,10 +638,9 @@
   "zelretch": {
    "tier": "Outsider",
    "clsCn": "Wielder of the Second Magic × NFF Ultimate Arms Dealer",
-   "servant": "Jensen",
+   "servant": "Jensen Huang",
    "master": "NVIDIA",
    "clsShort": "Second Magic User",
-   "servantSub": "Jensen Huang",
    "facts": [
     [
      "TYPE-MOON Template",

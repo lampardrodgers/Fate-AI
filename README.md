@@ -30,8 +30,8 @@
 | 下四骑 | Assassin | GLM | 唐杰 |
 | 下四骑 | Berserker | Grok | Elon Musk |
 | Extra | Ruler | DeepSeek | 梁文锋 |
-| 灾厄 | Unbeast / Beast VII | 唐纳德·约翰·特朗普（懂王） | MAGA / 白宫 |
-| 局外人 | 第二法魔法使 | 老黄 | NVIDIA |
+| 灾厄 | Unbeast / Beast VII | 唐纳德·特朗普 | MAGA / 白宫 |
+| 局外人 | 第二法魔法使 | 黄仁勋 | NVIDIA |
 
 每位角色都有完整的「从者资料卡」：型月模板、召唤圣遗物、六维面板（雷达图 + 条形图）、御主档案、保有技能、宝具与阵营剧本。
 

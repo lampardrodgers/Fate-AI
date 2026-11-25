@@ -573,9 +573,8 @@
   "unbeast": {
    "tier": "災厄",
    "clsCn": "ビーストVII・人類悪",
-   "servant": "ドナルド・ジョン・トランプ",
+   "servant": "ドナルド・トランプ",
    "master": "MAGA / ホワイトハウス",
-   "servantSub": "称号「ドン王」",
    "facts": [
     [
      "型月テンプレート",
@@ -639,10 +638,9 @@
   "zelretch": {
    "tier": "局外者",
    "clsCn": "第二魔法の魔法使い × NFF究極の武器商人",
-   "servant": "ジェンスン",
+   "servant": "ジェンスン・フアン",
    "master": "NVIDIA",
    "clsShort": "第二魔法の魔法使い",
-   "servantSub": "ジェンスン・フアン（黄仁勲）",
    "facts": [
     [
      "型月テンプレート",

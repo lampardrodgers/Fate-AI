@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 (function(){
-  var t = localStorage.getItem('fateai-theme') || 'dark';
+  var q = (location.search.match(/[?&]theme=(light|dark)/)||[])[1];
+  var t = q || localStorage.getItem('fateai-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', t);
 })();
 </script>
@@ -465,6 +466,9 @@ html[lang="en"] .skill .sub-en{display:block}
 #bgmBtn.hint{animation:hint 2.2s ease-in-out infinite}
 @keyframes hint{0%,100%{box-shadow:0 0 0 0 rgba(201,169,97,0)}50%{box-shadow:0 0 0 4px rgba(201,169,97,.35)}}
 #bgmBtn.playing{color:var(--red2);border-color:color-mix(in srgb,var(--red2) 60%,transparent)}
+html.shot .tools{display:none}
+html.shot .rv,html.shot .rv *{transition:none!important}
+html.shot .nav,html.shot .rail{transition:none!important}
 </style>
 </head>
 <body>
@@ -1144,13 +1148,13 @@ function renderAll(){
 
 /* ================= BEHAVIOR ================= */
 const nav = $('nav'), rail = $('rail'), prog = $('railProg');
-const onScroll = ()=>{
+let onScroll = ()=>{
   const past = scrollY > innerHeight*0.6;
   nav.classList.toggle('show', past);
   rail.classList.toggle('show', past);
   prog.style.width = (scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%';
 };
-addEventListener('scroll', onScroll, {passive:true});
+addEventListener('scroll', ()=>onScroll(), {passive:true});
 
 let activeId = null;
 function setActive(id){
@@ -1293,6 +1297,38 @@ addEventListener('keydown',e=>{
 
 renderAll();
 onScroll();
+// deep links like /#caster: content is rendered by JS, so jump after render
+if(location.hash && document.getElementById(location.hash.slice(1))){
+  if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const el = document.getElementById(location.hash.slice(1));
+  let userMoved = false;
+  const stop = ()=>{ userMoved = true; };
+  ['wheel','touchstart','keydown','pointerdown'].forEach(t=>addEventListener(t, stop, {once:true, passive:true}));
+  const jump = ()=>{
+    if(userMoved) return;
+    const html = document.documentElement; html.style.scrollBehavior='auto';
+    scrollTo(0, el.getBoundingClientRect().top + scrollY - 64);
+    html.style.scrollBehavior='';
+    onScroll();
+  };
+  jump();
+  document.fonts && document.fonts.ready.then(jump);
+  addEventListener('load', jump, {once:true});
+  setTimeout(jump, 1500);
+}
+if(/[?&]shot\b/.test(location.search)){
+  document.documentElement.classList.add('shot');
+  const target = location.hash && document.getElementById(location.hash.slice(1));
+  if(target){
+    // render only the linked section at the top of the page (used to make README screenshots)
+    document.querySelectorAll('header.hero, footer, main > section, main > #chapters > section, main > #chapters > section > .chapter, .servant')
+      .forEach(el=>{ if(!el.contains(target) && el!==target) el.style.display='none'; });
+    scrollTo(0,0);
+    $('nav').classList.add('show'); $('rail').classList.add('show');
+    onScroll = ()=>{};
+  }
+  document.querySelectorAll('.rv').forEach(e=>{ e.classList.add('in'); e.querySelectorAll('.bar i').forEach(i=>i.style.width=i.dataset.w+'%'); });
+}
 
 </script>
 </body>

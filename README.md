@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="FATE/AI" width="560">
+  <a href="https://fate.emmm.si"><img src="docs/banner.jpg" alt="FATE/AI — 型月 AI 圣杯战争 · 完全体设定集"></a>
 </p>
 
 <p align="center">
@@ -35,6 +35,18 @@
 
 每位角色都有完整的「从者资料卡」：型月模板、召唤圣遗物、六维面板（雷达图 + 条形图）、御主档案、保有技能、宝具与阵营剧本。
 
+## 截图
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/caster.jpg" alt="从者资料卡 · 暗色 · 中文"><br><sub>从者资料卡 · 暗色模式 · 中文</sub></td>
+    <td width="50%"><img src="docs/light.jpg" alt="Servant sheet · light mode · English"><br><sub>Servant sheet · Light mode · English</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/roster.jpg" alt="参戦者名簿 · 日本語"><br><sub>参戦者名簿 · ダークモード · 日本語</sub></td>
+  </tr>
+</table>
+
 ## 功能
 
 - **型月风格主题**：Fate/Zero 式暗夜金红配色、旋转魔法阵首屏、令咒纹章、FATE/AI 圣剑斜杠 Logo
@@ -60,9 +72,10 @@
 │   ├── check-i18n.js     # 检查 en/ja 翻译结构是否与 zh.json 一致
 │   └── build-i18n.js     # i18n/*.json → i18n/*.js
 ├── assets/
-│   ├── logo.svg          # FATE/AI Logo
+│   ├── logo.svg          # FATE/AI Logo（矢量源文件）
 │   ├── audio/bgm.m4a     # 背景音乐（Fate/Zero OST I - Track 01 "Point Zero"）
 │   └── thumbs/           # 立绘缩略图（首页、目录、表格使用）
+├── docs/                 # README 用的截图
 ├── 纯立绘/               # 原始立绘（详情页与大图使用）
 └── 角色设定图/           # 角色设定图原图
 ```
@@ -92,6 +105,7 @@ python3 -m http.server 8765
 - 只改文字、不增删技能 / 宝具时，第 ② 步可以省略，直接改三种语言对应的位置即可。
 - **增删了技能、宝具、段落**时，三份 json 的数组长度必须一致，否则 `check-i18n.js` 会逐条报出哪里对不上。
 - 某条翻译暂时缺失也不会崩：网页会自动回退显示中文。
+- 网址支持 `?lang=zh|en|ja`、`?theme=light|dark` 与 `#角色id`（如 `#caster`）直达；加 `&shot` 可进入截图模式（只渲染该章节、隐藏右上角按钮），README 截图就是这样生成的。
 - 让 Claude 帮忙时，可以直接说「把 xx 改成 yy，并同步英文日文」，它会按这个流程走完。
 - 界面文字（按钮、表头、标题等）在 `index.html` 的 `const UI = {...}` 中，三种语言各一份。
 

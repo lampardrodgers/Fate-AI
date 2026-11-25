@@ -292,9 +292,18 @@ tbody tr{cursor:pointer;transition:background .2s}
 tbody tr:hover{background:rgba(var(--w),.04)}
 td.tier{white-space:nowrap;color:var(--dim);font-size:13px}
 td.cls{font-family:var(--latin);font-weight:700;white-space:nowrap;color:var(--c);letter-spacing:.06em}
-td.sv{font-weight:900;white-space:nowrap;display:flex;align-items:center;gap:10px}
-td.sv img{width:34px;height:34px;object-fit:cover;object-position:center 12%;border:1px solid var(--c);border-radius:50%}
+#overview td{vertical-align:middle;line-height:1.6;padding:13px 12px}
+#overview thead th{padding:14px 12px}
+#overview td:first-child,#overview th:first-child{padding-left:18px}
+td.sv{font-weight:900;white-space:nowrap}
+td.sv .svi{display:flex;align-items:center;gap:10px}
+td.sv img{flex:none;width:34px;height:34px;object-fit:cover;object-position:center 12%;border:1px solid var(--c);border-radius:50%}
 td.ms{white-space:nowrap;color:var(--t2)}
+td.hi{white-space:nowrap;color:var(--t2)}
+td.line{color:var(--t2);min-width:300px}
+html[lang="en"] #overview td.tier{white-space:normal;min-width:110px}
+html[lang="en"] #overview td.hi{white-space:normal;min-width:190px;max-width:240px}
+html[lang="en"] #overview td.line{min-width:340px}
 
 .matrix{margin-top:40px}
 .matrix h3{font-size:14px;letter-spacing:.4em;color:var(--gold);font-weight:600;margin-bottom:14px}
@@ -1110,15 +1119,16 @@ function renderAll(){
       ${VIEW.map((d,i)=>[d,i]).filter(([d])=>d.group===gi).map(([d,i])=>servantHTML(d,i)).join('')}
     </section>`).join('');
 
-  // overview table
+  // overview table (plain text: no bold highlights)
+  const plain = t=>String(t).replace(/\*\*/g,'');
   $('ovBody').innerHTML = VIEW.map(d=>`
     <tr style="${vars(d)}" data-go="${d.id}">
       <td class="tier"><b style="color:var(--c2)">${d.tier}</b></td>
       <td class="cls">${clsLabel(d)}</td>
-      <td class="sv"><img src="${imgThumb(d)}" alt="">${d.servant}</td>
+      <td class="sv"><span class="svi"><img src="${imgThumb(d)}" alt="">${d.servant}</span></td>
       <td class="ms">${d.master}</td>
-      <td>${md(d.ov[0])}</td>
-      <td>${md(d.ov[1])}</td>
+      <td class="hi">${plain(d.ov[0])}</td>
+      <td class="line">${plain(d.ov[1])}</td>
     </tr>`).join('');
 
   // stat matrix

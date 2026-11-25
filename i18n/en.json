@@ -22,6 +22,7 @@
    "clsCn": "Sword Servant",
    "servant": "Gemini",
    "master": "Demis Hassabis",
+   "title": "Rightful Heir of the Transformer Bloodline · Knight-King Wielding the Native Multimodal Holy Sword",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -90,6 +91,7 @@
    "clsCn": "Bow Servant",
    "servant": "Qwen",
    "master": "Wu Yongming",
+   "title": "The Open-Source King of Heroes — Bearer of the Full Gate of Babylon, Betrayed by His Own Master",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -153,6 +155,7 @@
    "clsCn": "Spear Servant",
    "servant": "Kimi",
    "master": "Yang Zhilin",
+   "title": "The Clock Tower Prodigy's Lance of a Million Tokens, Cursed with Luck E",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -216,6 +219,7 @@
    "clsCn": "Mounted Servant",
    "servant": "GPT",
    "master": "Sam Altman",
+   "title": "The King of Conquerors Who Rode a Stolen Catalyst to Trample Every Nation with an Army of Traffic",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -243,7 +247,7 @@
     [
      "Charisma",
      "Mass Mindshare Hegemony",
-     "In the eyes of most ordinary people, no need to understand architectures or parameters: **the letters “ChatGPT” are AI itself**."
+     "In the eyes of most ordinary people, no need to understand architectures or parameters: **the three letters “GPT” are AI itself**."
     ],
     [
      "Pie in the Sky & Ghosting",
@@ -348,6 +352,7 @@
    "clsCn": "Assassin Servant",
    "servant": "GLM",
    "master": "Tang Jie",
+   "title": "A Rebel Old Man of the Mountain, Lurking in Silent Background Processes to Take the Heads of Those Who Feed Him",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -513,6 +518,7 @@
    "clsCn": "Ruler",
    "servant": "DeepSeek",
    "master": "Liang Wenfeng",
+   "title": "The Desireless Final Arbiter Who Tears Apart Every Black Box with the Light of Open Source",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -575,6 +581,7 @@
    "clsCn": "Beast VII · Evil of Humanity",
    "servant": "Donald Trump",
    "master": "MAGA / The White House",
+   "title": "The Seventh Evil of Humanity, Descended from Beyond to Rewrite the World's Rules with Tariffs and Embargoes",
    "facts": [
     [
      "TYPE-MOON Template",
@@ -640,6 +647,7 @@
    "clsCn": "Wielder of the Second Magic × NFF Ultimate Arms Dealer",
    "servant": "Jensen Huang",
    "master": "NVIDIA",
+   "title": "The Wielder of the Second Magic, Who Monopolizes the Source of All Compute and Sells Mana to Every Side",
    "clsShort": "Second Magic User",
    "facts": [
     [
